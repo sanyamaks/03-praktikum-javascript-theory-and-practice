@@ -14,6 +14,47 @@
 */
 
 function palindrome(str) {
+
+    const punctuationMarks = [
+        ".",
+        ",",
+        "!",
+        "&",
+        ":",
+        ";",
+        "-",
+        "\"",
+        "\'",
+        "\`",
+        "  ", //двойной пробел
+    ];
+
+    const deletePunctuationMarks = function (str) {
+        return punctuationMarks.reduce(function (interValue, item) {
+            if (!interValue.includes(item)) return interValue; else {
+                while (interValue.includes(item)) {
+                    interValue = interValue.substr(0, interValue.indexOf(item)) + interValue.substr(interValue.indexOf(item) + 1, interValue.length);
+                }
+                return interValue
+            }
+        }, str);
+    };
+    let isPalindrome = false;
+    let newStr = deletePunctuationMarks(str).toLowerCase();
+    const halfStringLength = newStr.length % 2 === 0 ? newStr.length / 2 : newStr.length / 2 - 0.5;
+    console.log(halfStringLength);
+    for (let i = 0; i <  halfStringLength; i++) {
+
+        console.log(newStr[i] + " " + newStr[newStr.length - i]);
+        if (newStr[i] !== newStr[newStr.length - i -1]) {
+            isPalindrome = false;
+            break;
+        } else {
+            isPalindrome = true;
+
+        }
+    }
+    return isPalindrome
     // Напишите код здесь
 }
 

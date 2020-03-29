@@ -9,7 +9,41 @@
 */
 
 function reverseWords(str) {
-    // Напишите код здесь
+    if (str === "") {
+        return ""
+    } else if (!str) {
+        console.error("Введите строку, которую нужно перевернуть");
+    } else if (typeof str !== "string") {
+        console.error("Введите строку, которую нужно перевернуть");
+    } else {
+        const punctuationMarks = [
+            ".",
+            ",",
+            "!",
+            "&",
+            ":",
+            ";",
+            "-",
+            "\"",
+            "\'",
+            "\`",
+            "  ", //двойной пробел
+        ];
+
+        const deletePunctuationMarks = function (str) {
+            return punctuationMarks.reduce(function (interValue, item) {
+                if (!interValue.includes(item)) return interValue; else {
+                    while (interValue.includes(item)) {
+                        interValue = interValue.substr(0, interValue.indexOf(item)) + interValue.substr(interValue.indexOf(item) + 1, interValue.length);
+                    }
+                    return interValue
+                }
+            }, str);
+        };
+
+        let newStr = deletePunctuationMarks(str);
+        return newStr.split(" ").reverse().join(" ");
+    }
 }
 
 // Протестируйте решение, вызывая функцию с разными аргументами:

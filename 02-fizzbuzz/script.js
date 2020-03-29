@@ -11,9 +11,31 @@
 */
 
 function fizzBuzz(num) {
-    // Напишите код здесь
+    if (!num) {
+        console.log("Введите целое число");
+    } else if (typeof num !== "number") {
+        console.log("Введите целое число");
+    } else if (num % 1 !== 0) {
+        console.log("Введите целое число");
+    } else {
+        let arr = [];
+        for (let i = 1; i <= num; i++) {
+            if (i % 3 === 0 && i % 5 === 0) {
+                arr.push("fizzbuzz");
+            } else if (i % 3 === 0) {
+                arr.push("fizz");
+            } else if (i % 5 === 0) {
+                arr.push("buzz");
+            } else {
+                arr.push(i);
+            }
+        }
+        for (let j = 0; j < arr.length; j++) {
+            console.log(arr[j]);
+        }
+    }
 }
 
 // Протестируйте решение, вызывая функцию с разными аргументами:
 
-console.log(fizzBuzz(15));
+fizzBuzz(15);
