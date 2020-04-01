@@ -11,58 +11,71 @@
  * Считайте, что на вход всегда передаётся слово: то есть знаков препинания
  * и пробелов в аргументе быть не может.
  *
-*/
+ */
 
 function palindrome(str) {
+    if (typeof str !== "string") {
+        console.log("Введите строку");
+    } else if (!str) {
+        return true;
+    } else {
+        const punctuationMarks = [
+            ".",
+            ",",
+            "!",
+            "&",
+            ":",
+            ";",
+            "-",
+            '"',
+            "'",
+            "`",
+            "  " //двойной пробел
+        ];
 
-    const punctuationMarks = [
-        ".",
-        ",",
-        "!",
-        "&",
-        ":",
-        ";",
-        "-",
-        "\"",
-        "\'",
-        "\`",
-        "  ", //двойной пробел
-    ];
-
-    const deletePunctuationMarks = function (str) {
-        return punctuationMarks.reduce(function (interValue, item) {
-            if (!interValue.includes(item)) return interValue; else {
-                while (interValue.includes(item)) {
-                    interValue = interValue.substr(0, interValue.indexOf(item)) + interValue.substr(interValue.indexOf(item) + 1, interValue.length);
+        const deletePunctuationMarks = function (str) {
+            return punctuationMarks.reduce(function (interValue, item) {
+                if (!interValue.includes(item)) return interValue;
+                else {
+                    while (interValue.includes(item)) {
+                        interValue =
+                            interValue.substr(0, interValue.indexOf(item)) +
+                            interValue.substr(
+                                interValue.indexOf(item) + 1,
+                                interValue.length
+                            );
+                    }
+                    return interValue;
                 }
-                return interValue
+            }, str);
+        };
+
+        let isPalindrome = false;
+
+        let newStr = deletePunctuationMarks(str).toLowerCase();
+
+        const halfStringLength =
+            newStr.length % 2 === 0 ? newStr.length / 2 : newStr.length / 2 - 0.5;
+
+        for (let i = 0; i < halfStringLength; i++) {
+            console.log(newStr[i] + " " + newStr[newStr.length - i - 1]);
+            if (newStr[i] !== newStr[newStr.length - i - 1]) {
+                isPalindrome = false;
+                break;
+            } else {
+                isPalindrome = true;
             }
-        }, str);
-    };
-    let isPalindrome = false;
-    let newStr = deletePunctuationMarks(str).toLowerCase();
-    const halfStringLength = newStr.length % 2 === 0 ? newStr.length / 2 : newStr.length / 2 - 0.5;
-    console.log(halfStringLength);
-    for (let i = 0; i <  halfStringLength; i++) {
-
-        console.log(newStr[i] + " " + newStr[newStr.length - i]);
-        if (newStr[i] !== newStr[newStr.length - i -1]) {
-            isPalindrome = false;
-            break;
-        } else {
-            isPalindrome = true;
-
         }
+
+        return isPalindrome;
     }
-    return isPalindrome
-    // Напишите код здесь
 }
 
 // Протестируйте решение, вызывая функцию с разными аргументами:
 
-console.log(palindrome('топот')); // должно быть true
-console.log(palindrome('Saippuakivikauppias')); // true
-console.log(palindrome('привет')); // false
+console.log(palindrome("топот")); // должно быть true
+console.log(palindrome("Saippuakivikauppias")); // true
+console.log(palindrome("привет")); // false
 
 /*
  * Бонус. Задача для любознательных. Пусть функция принимает на вход любую строку,
@@ -70,4 +83,4 @@ console.log(palindrome('привет')); // false
  *
  * palindrome('О, лета тело!'); // true
  *
-*/
+ */
