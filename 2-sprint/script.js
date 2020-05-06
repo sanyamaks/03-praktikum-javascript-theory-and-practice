@@ -2,67 +2,17 @@
 // Правильная организация кода, это важная часть разработки. Ведь код надо постоянно поддерживать
 // подключить его можно через  <script src="js/initialCards.js"></script> 
 // Плюс мы выносим данные отдельно, а логика останется в этом файле 
-let initialCards = [
-  {
-    name: "Архыз",
-    link:
-      "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg"
-  },
-  {
-    name: "Челябинская область",
-    link:
-      "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg"
-  },
-  {
-    name: "Иваново",
-    link:
-      "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg"
-  },
-  {
-    name: "Камчатка",
-    link:
-      "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg"
-  },
-  {
-    name: "Холмогорский район",
-    link:
-      "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg"
-  },
-  {
-    name: "Байкал",
-    link:
-      "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg"
-  },
-  {
-    name: "Нургуш",
-    link:
-      "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/khrebet-nurgush.jpg"
-  },
-  {
-    name: "Тулиновка",
-    link:
-      "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/tulinovka.jpg"
-  },
-  {
-    name: "Остров Желтухина",
-    link:
-      "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/zheltukhin-island.jpg"
-  },
-  {
-    name: "Владивосток",
-    link:
-      "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/vladivostok.jpg"
-  }
-];
+
 const placesList = document.querySelector(".places-list");
 const openPopupButton = document.querySelector(".button.user-info__button");
 const popup = document.querySelector(".popup");
 const closePopupButton = document.querySelector(".popup__close");
-
+console.log(placesList);
 const renderCards = () => {
   placesList.innerHTML = "";
   initialCards.map((card, id) => {
-    const placeCard = createCard(card.name, card.link, id);
+    const placeCard = getTemplate(card);
+    placeCard.id = `${id}`;
     placesList.appendChild(placeCard);
   });
 };
@@ -78,7 +28,7 @@ const renderCards = () => {
  }
  myFunction(myObject)
 */
-const createCard = (cardName, urlImage, idCard) => {
+const getTemplate = ({name, link}) => {
   /*  Можно лучше:
   *  Альтернативный способ создания карточки. При нем не требуется создавать вручную все
   * Вы можете реализовать функцию, которая сразу же возвращает “кусок” разметки. Это решает проблему постоянного createElement DOM-элементов.
@@ -98,6 +48,7 @@ const createCard = (cardName, urlImage, idCard) => {
   *  https: //developer.mozilla.org/ru/docs/Web/API/Element/insertAdjacentHTML
   *    pointElement.insertAdjacentHTML('afterend', getTemplate(data));
   */
+
   const placeCard = document.createElement("div");
   const placeCardImage = document.createElement("div");
   const placeCardDeleteIcon = document.createElement("button");
@@ -113,9 +64,8 @@ const createCard = (cardName, urlImage, idCard) => {
   placeCardName.classList.add("place-card__name");
   placeCardLikeIcon.classList.add("place-card__like-icon");
 
-  placeCard.id = idCard;
-  placeCardImage.style.backgroundImage = `url(${urlImage})`;
-  placeCardName.textContent = `${cardName}`;
+  placeCardImage.style.backgroundImage = `url(${link})`;
+  placeCardName.textContent = `${name}`;
 
   placeCard.appendChild(placeCardImage);
   placeCard.appendChild(placeCardDescription);
