@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" xmlns:https>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,6 +18,7 @@
       <div class="user-info__data">
         <h1 class="user-info__name">Jaques Causteau</h1>
         <p class="user-info__job">Sailor, Researcher</p>
+        <button class="user-info__edit">Edit</button>
       </div>
       <button class="button user-info__button">+</button>
     </div>
@@ -39,31 +40,53 @@
     <!-- конец примера. -->
 
   </div>
-  <div class="popup">
+  <div class="popup popup_place-card">
     <div class="popup__content">
       <img src="images/close.svg" alt="" class="popup__close">
       <h3 class="popup__title">Новое место</h3>
-      <form class="popup__form" name="new">
-        <input type="text" name="name" class="popup__input popup__input_type_name" placeholder="Название">
-        <input type="text" name="link" class="popup__input popup__input_type_link-url" placeholder="Ссылка на картинку">
-        <button type class="button popup__button">+</button>
+      <form class="popup__form" name="placeCard" novalidate>
+        <div class="popup__container">
+          <input type="text" name="name" class="popup__input popup__input_type_name" placeholder="Название" minlength="2" maxlength="30" required>
+          <p class="popup__error-message"></p>
+        </div>
+        <div class="popup__container">
+          <input type="url" name="link" class="popup__input popup__input_type_link-url"
+                 placeholder="Ссылка на картинку" pattern="https?://.+.jpg"  required>
+          <p class="popup__error-message"></p>
+        </div>
+        <button class="button popup__button">+</button>
       </form>
     </div>
   </div>
-</div>
-<template class="template">
-  <div class="place-card" id="">
-    <div class="place-card__image"
-         style="background-image: url(https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg)">
-      <button class="place-card__delete-icon"></button>
-    </div>
-    <div class="place-card__description">
-      <h3 class="place-card__name">Камчатка</h3>
-      <button class="place-card__like-icon"></button>
+
+  <div class="popup popup_profile">
+    <div class="popup__content">
+      <img src="images/close.svg" alt="" class="popup__close">
+      <h3 class="popup__title">Редактировать профиль</h3>
+      <form class="popup__form" name="profile" novalidate>
+        <div class="popup__container">
+          <input type="text" name="name" class="popup__input popup__input_type_name" placeholder="Имя" minlength="2" maxlength="30" required>
+          <p class="popup__error-message"></p>
+        </div>
+        <div class="popup__container">
+          <input type="text" name="description" class="popup__input popup__input_type_description" placeholder="О себе" minlength="2" maxlength="30" required>
+          <p class="popup__error-message"></p>
+        </div>
+        <button class="button popup__button">Сохранить</button>
+      </form>
     </div>
   </div>
-</template>
+
+  <div class="popup popup_image">
+    <div class="popup__content popup__content_image">
+      <img src="images/close.svg" alt="" class="popup__close">
+      <img src="" alt="Изображение места" class="popup__image">
+    </div>
+  </div>
+</div>
+<script src="errorMessages.js"></script>
 <script src="initialCards.js"></script>
+<script src="getTemplateCard.js"></script>
 <script src="script.js"></script>
 </body>
 </html>

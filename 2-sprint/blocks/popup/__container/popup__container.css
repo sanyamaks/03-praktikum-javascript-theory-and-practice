@@ -1,0 +1,9 @@
+.popup__container {
+  position: relative;
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+.popup__container:last-of-type {
+  margin-bottom: 0;
+}
