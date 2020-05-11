@@ -14,27 +14,25 @@ const renderCards = () => {
 };
 
 const renderProfile = profile => {
-  const {name, description} = profile;
+  const { name, description } = profile;
   const fullName = document.querySelector(".user-info__name");
   const job = document.querySelector(".user-info__job");
   fullName.textContent = name;
   job.textContent = description;
 };
 
-const handleInput = function () {
+const handleInput = function() {
   const form = this.closest(".popup__form");
   const errorData = checkFormValidity(form);
   const errorDataItem = checkInputValidity(this);
-  if (errorData.every(item => item.valid === true)) {
-    setSubmitButtonState(form, true);
-  }
-  if (errorDataItem.valid === true) {
-    setErrorMessageState(this, true);
-  }
+  setSubmitButtonState(form, errorData.every(item => item.valid === true));
+  setErrorMessageState(this, errorDataItem.valid === true);
 };
 
 const setErrorMessageState = (input, valid) => {
-  const errorMessage = input.closest(".popup__container").querySelector(".popup__error-message");
+  const errorMessage = input
+    .closest(".popup__container")
+    .querySelector(".popup__error-message");
   if (!valid) {
     errorMessage.classList.add("popup__error-message_show");
     errorMessage.textContent = input.validationMessage;
@@ -59,7 +57,7 @@ const checkInputValidity = input => {
       input.setCustomValidity(errorMessages.specifiedInterval);
     }
   }
-  return {input, valid};
+  return { input, valid };
 };
 
 const setSubmitButtonState = (form, valid) => {
@@ -71,24 +69,26 @@ const setSubmitButtonState = (form, valid) => {
   }
 };
 
-const checkFormValidity = (form) => {
+const checkFormValidity = form => {
   /*Можно лучше. Можно коллекцию полей input формы найти через form.querySelector("input"). */
   const elements = Array.from(form.elements);
   return elements.reduce((arr, item) => {
     if (item.tagName === "INPUT") {
       arr.push(checkInputValidity(item));
-      return arr
+      return arr;
     }
-    return arr
+    return arr;
   }, []);
 };
 
-const handleSubmitPlaceCard = function (event) {
+const handleSubmitPlaceCard = function(event) {
   event.preventDefault();
   const errorData = checkFormValidity(this);
-  if (errorData.every(item => item.valid === true)) {
-    const {name, link} = this.elements;
-    initialCards.push({name: name.value, link: link.value});
+  if (!errorData.every(item => item.valid === true)) {
+    return null;
+  } else {
+    const { name, link } = this.elements;
+    initialCards.push({ name: name.value, link: link.value });
     this.reset();
     handleClosePopup(event);
     /*REVIEW. Можно лучше. Не думаю, что рационально перерисовывать весь список карточек при удалении карточки.
@@ -97,31 +97,22 @@ const handleSubmitPlaceCard = function (event) {
     */
     renderCards();
     this.removeEventListener("submit", handleSubmitPlaceCard);
-  } else {
-    errorData.forEach(function (errorDataItem) {
-      setErrorMessageState(errorDataItem.input, errorDataItem.valid);
-    })
   }
-  setSubmitButtonState(this, false);
 };
 
-const handleSubmitFormProfile = function (event) {
+const handleSubmitFormProfile = function(event) {
   event.preventDefault();
   const errorData = checkFormValidity(this);
-  if (errorData.every(item => item.valid === true)) {
-    const {name, description} = this.elements;
-    renderProfile({name: name.value, description: description.value});
+  if (!errorData.every(item => item.valid === true)) {
+    return null;
+  } else {
+    const { name, description } = this.elements;
+    renderProfile({ name: name.value, description: description.value });
     this.reset();
     handleClosePopup(event);
     this.removeEventListener("submit", handleSubmitFormProfile);
-  } else {
-    errorData.forEach(function (errorDataItem) {
-      setErrorMessageState(errorDataItem.input, errorDataItem.valid);
-    })
   }
-  setSubmitButtonState(this, false);
 };
-
 
 const setEventListenersFormProfile = form => {
   form.addEventListener("submit", handleSubmitFormProfile);
@@ -170,7 +161,10 @@ const handleClosePopup = event => {
 };
 
 const setListenersAfterOpenPopup = closeButton => {
-  openPopupPlaceCardButton.removeEventListener("click", handleOpenPopupPlaceCard);
+  openPopupPlaceCardButton.removeEventListener(
+    "click",
+    handleOpenPopupPlaceCard
+  );
   editProfileButton.removeEventListener("click", handleOpenPopupProfile);
   closeButton.addEventListener("click", handleClosePopup);
   placesList.removeEventListener("click", handleClickPlaceList);
@@ -194,10 +188,19 @@ const handleOpenPopupProfile = () => {
   const popupProfile = document.querySelector(".popup_profile");
   const form = popupProfile.querySelector(".popup__form");
   const closePopupButton = popupProfile.querySelector(".popup__close");
+  const fullName = document.querySelector(".user-info__name");
+  const job = document.querySelector(".user-info__job");
 
+  form.name.value = fullName.textContent;
+  form.description.value = job.textContent;
   openPopup(popupProfile);
   setListenersAfterOpenPopup(closePopupButton);
   handleFormProfile(form);
+
+  const errorData = checkFormValidity(form);
+  if (errorData.every(item => item.valid === true)) {
+    setSubmitButtonState(form, true);
+  }
 };
 
 const handleOpenPopupImage = id => {
@@ -247,7 +250,6 @@ placesList.addEventListener("click", handleClickPlaceList);
 
 renderCards();
 
-
 /* REVIEW.Резюме1.
 
 Не работает корректно валидация обеих форм. Не сделан перенос информации о профиле в поля формы профиля из DOM-элементов страницы.
@@ -280,3 +282,4 @@ renderCards();
 При этом надо иметь в виду, что требуется валидация формы при событиях input, а не submit.
 
 */
+
