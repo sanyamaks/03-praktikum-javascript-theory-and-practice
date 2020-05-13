@@ -25,39 +25,39 @@ const handleInput = function() {
   const form = this.closest(".popup__form");
   const errorData = checkFormValidity(form);
   const errorDataItem = checkInputValidity(this);
-  setSubmitButtonState(form, errorData.every(item => item.valid === true));
-  setErrorMessageState(this, errorDataItem.valid === true);
+  setSubmitButtonState(form, errorData.every(item => item.valid));
+  setErrorMessageState(this, errorDataItem.errorMessage, errorDataItem.valid);
 };
 
-const setErrorMessageState = (input, valid) => {
-  const errorMessage = input
+const setErrorMessageState = (input, errorMessage, valid) => {
+  const promptText = input
     .closest(".popup__container")
     .querySelector(".popup__error-message");
+  input.setCustomValidity(errorMessage);
+  promptText.textContent = input.validationMessage;
   if (!valid) {
-    errorMessage.classList.add("popup__error-message_show");
-    errorMessage.textContent = input.validationMessage;
+    promptText.classList.add("popup__error-message_show");
   } else {
-    errorMessage.classList.remove("popup__error-message_show");
+    promptText.classList.remove("popup__error-message_show");
   }
 };
 
 const checkInputValidity = input => {
   let valid = true;
+  let errorMessage = "";
   if (input.validity.valueMissing) {
     valid = false;
-    input.setCustomValidity(errorMessages.requiredField);
-  } else if (input.type === "url") {
-    if (input.validity.patternMismatch) {
-      valid = false;
-      input.setCustomValidity(errorMessages.noLink);
-    }
+    errorMessage = errorMessages.requiredField;
+  } else if (input.type === "url" && input.validity.patternMismatch) {
+    valid = false;
+    errorMessage = errorMessages.noLink;
+  } else if (input.validity.tooLong || input.validity.tooShort) {
+    valid = false;
+    errorMessage = errorMessages.specifiedInterval;
   } else {
-    if (input.validity.tooLong || input.validity.tooShort) {
-      valid = false;
-      input.setCustomValidity(errorMessages.specifiedInterval);
-    }
+    errorMessage = "";
   }
-  return { input, valid };
+  return { input, valid, errorMessage };
 };
 
 const setSubmitButtonState = (form, valid) => {
@@ -179,6 +179,8 @@ const handleOpenPopupPlaceCard = () => {
   const form = popupPlaceCard.querySelector(".popup__form");
   const closePopupButton = popupPlaceCard.querySelector(".popup__close");
 
+  setErrorMessageState(form.name, "", true);
+  setErrorMessageState(form.link, "", true);
   openPopup(popupPlaceCard);
   setListenersAfterOpenPopup(closePopupButton);
   handleFormPlaceCard(form);
@@ -193,6 +195,8 @@ const handleOpenPopupProfile = () => {
 
   form.name.value = fullName.textContent;
   form.description.value = job.textContent;
+  setErrorMessageState(form.name, "", true);
+  setErrorMessageState(form.description, "", true);
   openPopup(popupProfile);
   setListenersAfterOpenPopup(closePopupButton);
   handleFormProfile(form);
@@ -297,4 +301,3 @@ REVIEW2. Резюме2.
 2. Нужно протестировать работу формы профиля во всех случаях и убедиться, что оно происходит правильно.
 
 */
-
