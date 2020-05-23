@@ -44,7 +44,7 @@
     <div class="popup__content">
       <img src="images/close.svg" alt="" class="popup__close">
       <h3 class="popup__title">Новое место</h3>
-      <form class="popup__form" name="placeCard" novalidate>
+      <form class="popup__form" name="placeCard" >
         <div class="popup__container">
           <input type="text" name="name" class="popup__input popup__input_type_name" placeholder="Название"
                  minlength="2" maxlength="30" required>
@@ -64,7 +64,7 @@
     <div class="popup__content">
       <img src="images/close.svg" alt="" class="popup__close">
       <h3 class="popup__title">Редактировать профиль</h3>
-      <form class="popup__form" name="profile" novalidate>
+      <form class="popup__form" name="profile" >
         <div class="popup__container">
           <input type="text" name="name" class="popup__input popup__input_type_name" placeholder="Имя" minlength="2"
                  maxlength="30" required>
@@ -89,7 +89,14 @@
 </div>
 <script src="errorMessages.js"></script>
 <script src="initialCards.js"></script>
-<script src="getTemplateCard.js"></script>
+<script src="Input.js"></script>
+<script src="Card.js"></script>
+<script src="CardList.js"></script>
+<script src="FormPlaceCard.js"></script>
+<script src="FormProfile.js"></script>
+<script src="Popup.js"></script>
+<script src="UserInfo.js"></script>
+<script src="FormValidator.js"></script>
 <script src="script.js"></script>
 </body>
 </html>
