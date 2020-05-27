@@ -1,7 +1,12 @@
 class Card {
-  contructor() {}
-
-  create({ name, link }) {
+  constructor(name, link) {
+    this.card = {};
+    this.name = name;
+    this.link = link;
+    this.popupImage = document.querySelector(".popup_image");
+    this.popup = new Popup(this.popupImage);
+  }
+  create() {
     const placeCard = document.createElement("div");
     const placeCardImage = document.createElement("div");
     const placeCardDeleteIcon = document.createElement("button");
@@ -17,8 +22,8 @@ class Card {
     placeCardName.classList.add("place-card__name");
     placeCardLikeIcon.classList.add("place-card__like-icon");
 
-    placeCardImage.style.backgroundImage = `url(${link})`;
-    placeCardName.textContent = `${name}`;
+    placeCardImage.style.backgroundImage = `url(${this.link})`;
+    placeCardName.textContent = `${this.name}`;
 
     placeCard.appendChild(placeCardImage);
     placeCard.appendChild(placeCardDescription);
@@ -26,7 +31,9 @@ class Card {
     placeCardDescription.appendChild(placeCardName);
     placeCardDescription.appendChild(placeCardLikeIcon);
 
-    return placeCard;
+    this.card = placeCard;
+
+    return this.card;
   }
 
   like = event => {
@@ -34,33 +41,25 @@ class Card {
   };
 
   remove = event => {
-    const id = event.target.closest(".place-card").id;
-    initialCards.splice(id, 1);
-    cardList.renderCards();
+    event.target.closest(".places-list").removeChild(this.card);
   };
 
-  showImage = event => {
+  handleOpenPopupImage = event => {
     if (event.target.classList.contains("place-card__image")) {
-      const id = event.target.closest(".place-card").id;
-      this.handleOpenPopupImage(id);
+      const image = document.querySelector(".popup__image");
+      const link = event.target.style.backgroundImage.slice(5, -2);
+
+      image.src = link;
+
+      this.popup.open();
+      this.popup.setListenersAfterOpenPopup();
     }
   };
-
-  handleOpenPopupImage(id) {
-    const popupImage = document.querySelector(".popup_image");
-    const image = document.querySelector(".popup__image");
-    const popup = new Popup(popupImage);
-
-    image.src = initialCards[id].link;
-
-    popup.open(popupImage);
-    popup.setListenersAfterOpenPopup();
-  }
 
   setEventListeners(card) {
     card
       .querySelector(".place-card__image")
-      .addEventListener("click", this.showImage);
+      .addEventListener("click", this.handleOpenPopupImage);
     card
       .querySelector(".place-card__like-icon")
       .addEventListener("click", this.like);

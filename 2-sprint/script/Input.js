@@ -3,7 +3,7 @@ class Input {
    * Надо исправить
    * Параметр form никогда не используется.
    */
-  constructor(input, form, formValidator) {
+  constructor(input, formValidator) {
     this.input = input;
     this.setErrorMessageState = formValidator.setErrorMessageState;
     this.checkInputValidity = formValidator.checkInputValidity;

@@ -3,7 +3,7 @@
  * Необходимо использовать const, т.к. значение переменной не меняется.
  * (https://learn.javascript.ru/let-const)
  */
-let initialCards = [
+const initialCards = [
   {
     name: "Архыз",
     link:

@@ -1,50 +1,55 @@
-const placesList = document.querySelector(".places-list");
 const openPopupPlaceCardButton = document.querySelector(
   ".button.user-info__button"
 );
 const editProfileButton = document.querySelector(".user-info__edit");
-const fullName = document.querySelector(".user-info__name");
-const job = document.querySelector(".user-info__job");
+const popupProfile = document.querySelector(".popup_profile");
+const popupPlaceCard = document.querySelector(".popup_place-card");
+const formProfile = popupProfile.querySelector(".popup__form");
+const formPlaceCard = popupPlaceCard.querySelector(".popup__form");
+const popupProfileObj = new Popup(popupProfile);
+const popupPlaceCardObj = new Popup(popupPlaceCard);
+const formValidatorProfile = new FormValidator(formProfile);
+const formValidatorPlaceCard = new FormValidator(formPlaceCard);
 
-const card = new Card();
-const cardList = new CardList(placesList, initialCards);
-const userInfo = new UserInfo(fullName, job);
+const cardList = new CardList();
 
 const handleOpenPopupPlaceCard = () => {
-  const popupPlaceCard = document.querySelector(".popup_place-card");
-  const formPlaceCard = popupPlaceCard.querySelector(".popup__form");
-  const formValidator = new FormValidator(formPlaceCard);
-  const popup = new Popup(popupPlaceCard);
-  const form = new FormPlaceCard(formPlaceCard, formValidator, popup);
+  const form = new FormPlaceCard(
+    formPlaceCard,
+    formValidatorPlaceCard,
+    popupPlaceCardObj
+  );
 
-  formValidator.setErrorMessageState(formPlaceCard.name, "", true);
-  formValidator.setErrorMessageState(formPlaceCard.link, "", true);
+  formValidatorPlaceCard.resetErrorMessage(formPlaceCard.name, "", true);
+  formValidatorPlaceCard.resetErrorMessage(formPlaceCard.link, "", true);
 
-  popup.open(popupPlaceCard);
-  popup.setListenersAfterOpenPopup();
-  form.handleFormPlaceCard();
+  popupPlaceCardObj.open();
+  popupPlaceCardObj.setListenersAfterOpenPopup();
+  form.handleForm();
 };
 
 const handleOpenPopupProfile = () => {
-  const popupProfile = document.querySelector(".popup_profile");
-  const formProfile = popupProfile.querySelector(".popup__form");
-  const formValidator = new FormValidator(formProfile);
-  const popup = new Popup(popupProfile);
-  const form = new FormProfile(formProfile, formValidator, popup);
+  const userInfo = new UserInfo();
+  const form = new FormProfile(
+    formProfile,
+    formValidatorProfile,
+    popupProfileObj,
+    userInfo
+  );
 
   formProfile.name.value = userInfo.name;
   formProfile.description.value = userInfo.description;
-  formValidator.setErrorMessageState(formProfile.name, "", true);
-  formValidator.setErrorMessageState(formProfile.description, "", true);
+  formValidatorProfile.resetErrorMessage(formProfile.name, "", true); //Отдельная очистка ошибок здесь для того, если форма закроется по кнопке "Закрыть"
+  formValidatorProfile.resetErrorMessage(formProfile.description, "", true);
 
-  const isValidForm = formValidator
+  const isValidForm = formValidatorProfile
     .checkFormValidity()
     .every(item => item.valid);
-  formValidator.setSubmitButtonState(isValidForm);
+  formValidatorProfile.setSubmitButtonState(isValidForm);
 
-  popup.open(popupProfile);
-  popup.setListenersAfterOpenPopup();
-  form.handleFormProfile();
+  popupProfileObj.open();
+  popupProfileObj.setListenersAfterOpenPopup();
+  form.handleForm();
 };
 
 openPopupPlaceCardButton.addEventListener("click", handleOpenPopupPlaceCard);

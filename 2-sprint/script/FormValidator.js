@@ -9,12 +9,9 @@ class FormValidator {
      * Чтобы не проверять на то, является ли элемент input'ом, можно сразу выбрать только те элементы, которые
      * имеют класс .popup__input с помощью this.form.querySelectorAll()
      */
-    const elements = Array.from(this.form.elements);
+    const elements = Array.from(this.form.querySelectorAll("input"));
     return elements.reduce((arr, item) => {
-      if (item.tagName === "INPUT") {
-        arr.push(this.checkInputValidity(item));
-        return arr;
-      }
+      arr.push(this.checkInputValidity(item));
       return arr;
     }, []);
   };
@@ -24,20 +21,18 @@ class FormValidator {
      * Можно успростить:
      * Данный код имеет избыточную логику - если errorMessage не пустое, то инпут не валиден.
      */
-    let valid = true;
     let errorMessage = "";
     if (input.validity.valueMissing) {
-      valid = false;
       errorMessage = errorMessages.requiredField;
     } else if (input.type === "url" && input.validity.patternMismatch) {
-      valid = false;
       errorMessage = errorMessages.noLink;
     } else if (input.validity.tooLong || input.validity.tooShort) {
-      valid = false;
       errorMessage = errorMessages.specifiedInterval;
     } else {
       errorMessage = "";
     }
+    input.setCustomValidity(errorMessage);
+    let valid = !input.validationMessage;
     return { input, valid, errorMessage };
   };
 
@@ -54,12 +49,16 @@ class FormValidator {
     const promptText = input
       .closest(".popup__container")
       .querySelector(".popup__error-message");
-    input.setCustomValidity(errorMessage);
     promptText.textContent = input.validationMessage;
     if (!valid) {
       promptText.classList.add("popup__error-message_show");
     } else {
       promptText.classList.remove("popup__error-message_show");
     }
+  };
+
+  resetErrorMessage = input => {
+    input.setCustomValidity("");
+    this.setErrorMessageState(input, "", true);
   };
 }

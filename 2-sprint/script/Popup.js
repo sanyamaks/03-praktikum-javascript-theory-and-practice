@@ -2,6 +2,7 @@ class Popup {
   constructor(popup) {
     this.popup = popup;
     this.closeButton = popup.querySelector(".popup__close");
+    this.form = this.popup.querySelector(".popup__form");
   }
   open() {
     this.popup.classList.add("popup_is-opened");
@@ -16,8 +17,6 @@ class Popup {
      * Можно лучше:
      * Перенести эту строку в конструктор
      */
-    this.form = this.popup.querySelector(".popup__form");
-
     this.close();
     if (this.form) {
       this.form.reset();
