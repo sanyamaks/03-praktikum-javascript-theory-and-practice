@@ -1,4 +1,8 @@
 class Input {
+  /**
+   * Надо исправить
+   * Параметр form никогда не используется.
+   */
   constructor(input, form, formValidator) {
     this.input = input;
     this.setErrorMessageState = formValidator.setErrorMessageState;

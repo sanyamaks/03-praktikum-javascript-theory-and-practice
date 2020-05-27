@@ -4,6 +4,11 @@ class FormValidator {
   }
 
   checkFormValidity = () => {
+    /**
+     * Можно лучше:
+     * Чтобы не проверять на то, является ли элемент input'ом, можно сразу выбрать только те элементы, которые
+     * имеют класс .popup__input с помощью this.form.querySelectorAll()
+     */
     const elements = Array.from(this.form.elements);
     return elements.reduce((arr, item) => {
       if (item.tagName === "INPUT") {
@@ -15,6 +20,10 @@ class FormValidator {
   };
 
   checkInputValidity = input => {
+    /**
+     * Можно успростить:
+     * Данный код имеет избыточную логику - если errorMessage не пустое, то инпут не валиден.
+     */
     let valid = true;
     let errorMessage = "";
     if (input.validity.valueMissing) {

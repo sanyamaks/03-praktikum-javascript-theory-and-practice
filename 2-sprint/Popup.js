@@ -12,6 +12,10 @@ class Popup {
   }
 
   handleClosePopup = () => {
+    /**
+     * Можно лучше:
+     * Перенести эту строку в конструктор
+     */
     this.form = this.popup.querySelector(".popup__form");
 
     this.close();
