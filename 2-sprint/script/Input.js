@@ -5,6 +5,10 @@ class Input {
    */
   constructor(input, formValidator) {
     this.input = input;
+    /**
+     * Можно лучше:
+     * Проще сохранить весь formValidator
+     */
     this.setErrorMessageState = formValidator.setErrorMessageState;
     this.checkInputValidity = formValidator.checkInputValidity;
     this.checkFormValidity = formValidator.checkFormValidity;

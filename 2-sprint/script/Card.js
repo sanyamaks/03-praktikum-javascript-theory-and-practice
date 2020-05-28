@@ -1,6 +1,10 @@
 class Card {
+  /**
+   * Чтобы не создавать экземпляр класса Popup внутри класса Card, надо в script.js описать функцию, которая
+   * сменит src в попапе и откроет его. Затем функцию передать в create, чтобы назначить ее в обработчик.
+   */
   constructor(name, link) {
-    this.card = {};
+    this.card = {}; // Можно лучше: null либо не объявлять свойство
     this.name = name;
     this.link = link;
     this.popupImage = document.querySelector(".popup_image");

@@ -17,10 +17,6 @@ class FormValidator {
   };
 
   checkInputValidity = input => {
-    /**
-     * Можно успростить:
-     * Данный код имеет избыточную логику - если errorMessage не пустое, то инпут не валиден.
-     */
     let errorMessage = "";
     if (input.validity.valueMissing) {
       errorMessage = errorMessages.requiredField;

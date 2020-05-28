@@ -1,6 +1,10 @@
 class Popup {
   constructor(popup) {
     this.popup = popup;
+    /**
+     * Можно лучше:
+     * Для поддержания единого стиля необходимо выбрать что-то одно: popup или this.popup
+     */
     this.closeButton = popup.querySelector(".popup__close");
     this.form = this.popup.querySelector(".popup__form");
   }
@@ -14,8 +18,8 @@ class Popup {
 
   handleClosePopup = () => {
     /**
-     * Можно лучше:
-     * Перенести эту строку в конструктор
+     * Надо исправить:
+     * Лишний код: сброс формы необходимо делать там, где вызывается эта функция.
      */
     this.close();
     if (this.form) {
@@ -26,6 +30,12 @@ class Popup {
     this.setListenersAfterClosePopup();
   };
 
+  /**
+   * Надо исправить:
+   * Как писал в script.js, необходимо один раз назначать обработчики и не удалять их.
+   * Это сильно упростит код, но не сделает его не надежным, т.к. случаи когда открываем открытый попап
+   * или закрываем закрытый невозможно из-за специфики верстки.
+   */
   setListenersAfterClosePopup = () => {
     this.closeButton.removeEventListener("click", this.handleClosePopup);
     openPopupPlaceCardButton.addEventListener(
