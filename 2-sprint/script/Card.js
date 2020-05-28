@@ -4,7 +4,7 @@ class Card {
    * сменит src в попапе и откроет его. Затем функцию передать в create, чтобы назначить ее в обработчик.
    */
   constructor(name, link) {
-    this.card = {}; // Можно лучше: null либо не объявлять свойство
+    this.card = null; // Можно лучше: null либо не объявлять свойство
     this.name = name;
     this.link = link;
     this.popupImage = document.querySelector(".popup_image");
@@ -50,13 +50,12 @@ class Card {
 
   handleOpenPopupImage = event => {
     if (event.target.classList.contains("place-card__image")) {
-      const image = document.querySelector(".popup__image");
+      const image = this.popupImage.querySelector(".popup__image");
       const link = event.target.style.backgroundImage.slice(5, -2);
 
       image.src = link;
 
       this.popup.open();
-      this.popup.setListenersAfterOpenPopup();
     }
   };
 
@@ -70,5 +69,6 @@ class Card {
     card
       .querySelector(".place-card__delete-icon")
       .addEventListener("click", this.remove);
+    this.popup.setCloseButtonListeners();
   }
 }

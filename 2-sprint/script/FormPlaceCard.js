@@ -2,7 +2,7 @@ class FormPlaceCard extends Form {
   constructor(form, formValidator, popup, userInfo) {
     super(form, formValidator, popup, userInfo);
     this.form = form;
-    this.handleClosePopup = popup.handleClosePopup;
+    this.popup = popup;
     this.handleSubmitForm = this.handleSubmitForm.bind(this);
   }
   handleSubmitForm(event) {
@@ -20,7 +20,9 @@ class FormPlaceCard extends Form {
        * 1. Лучше сохранить this.popup и здесь вызывать this.popup.close()
        * 2. Перенести сброс формы из handleClosePopup сюда.
        */
-      this.handleClosePopup();
+      this.formValidator.setSubmitButtonState(false);
+      this.popup.close();
+      this.form.reset();
       this.form.removeEventListener("submit", this.handleSubmitForm);
     }
   }

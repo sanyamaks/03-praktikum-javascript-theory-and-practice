@@ -2,30 +2,44 @@ const openPopupPlaceCardButton = document.querySelector(
   ".button.user-info__button"
 );
 const editProfileButton = document.querySelector(".user-info__edit");
+const placeList = document.querySelector(".places-list");
+const fullName = document.querySelector(".user-info__name");
+const job = document.querySelector(".user-info__job");
 const popupProfile = document.querySelector(".popup_profile");
 const popupPlaceCard = document.querySelector(".popup_place-card");
 const formProfile = popupProfile.querySelector(".popup__form");
 const formPlaceCard = popupPlaceCard.querySelector(".popup__form");
 const popupProfileObj = new Popup(popupProfile);
+popupProfileObj.setCloseButtonListeners();
 const popupPlaceCardObj = new Popup(popupPlaceCard);
+popupPlaceCardObj.setCloseButtonListeners();
 const formValidatorProfile = new FormValidator(formProfile);
 const formValidatorPlaceCard = new FormValidator(formPlaceCard);
-
-const cardList = new CardList();
+const userInfo = new UserInfo(fullName, job);
+const formProfileObj = new FormProfile(
+  formProfile,
+  formValidatorProfile,
+  popupProfileObj,
+  userInfo,
+  fullName,
+  job
+);
+const formPlaceCardObj = new FormPlaceCard(
+  formPlaceCard,
+  formValidatorPlaceCard,
+  popupPlaceCardObj
+);
+const cardList = new CardList(placeList, initialCards);
 
 const handleOpenPopupPlaceCard = () => {
-  const form = new FormPlaceCard(
-    formPlaceCard,
-    formValidatorPlaceCard,
-    popupPlaceCardObj
-  );
 
+
+  formPlaceCard.reset();
   formValidatorPlaceCard.resetErrorMessage(formPlaceCard.name, "", true);
   formValidatorPlaceCard.resetErrorMessage(formPlaceCard.link, "", true);
 
   popupPlaceCardObj.open();
-  popupPlaceCardObj.setListenersAfterOpenPopup();
-  form.handleForm();
+  formPlaceCardObj.handleForm();
 };
 
 const handleOpenPopupProfile = () => {
@@ -36,13 +50,6 @@ const handleOpenPopupProfile = () => {
    *
    * То же самое касается и handleOpenPopupPlaceCard
    */
-  const userInfo = new UserInfo();
-  const form = new FormProfile(
-    formProfile,
-    formValidatorProfile,
-    popupProfileObj,
-    userInfo
-  );
 
   /**
    * Надо исправить:
@@ -81,8 +88,7 @@ const handleOpenPopupProfile = () => {
    *
    * То же самое касается и handleOpenPopupPlaceCard
    */
-  popupProfileObj.setListenersAfterOpenPopup();
-  form.handleForm();
+  formProfileObj.handleForm();
 };
 
 openPopupPlaceCardButton.addEventListener("click", handleOpenPopupPlaceCard);

@@ -9,15 +9,12 @@ class Input {
      * Можно лучше:
      * Проще сохранить весь formValidator
      */
-    this.setErrorMessageState = formValidator.setErrorMessageState;
-    this.checkInputValidity = formValidator.checkInputValidity;
-    this.checkFormValidity = formValidator.checkFormValidity;
-    this.setSubmitButtonState = formValidator.setSubmitButtonState;
+    this.formValidator = formValidator;
   }
   handleInput = () => {
-    const isValidForm = this.checkFormValidity().every(item => item.valid);
-    this.setSubmitButtonState(isValidForm);
-    const { errorMessage, valid } = this.checkInputValidity(this.input);
-    this.setErrorMessageState(this.input, errorMessage, valid);
+    const isValidForm = this.formValidator.checkFormValidity().every(item => item.valid);
+    this.formValidator.setSubmitButtonState(isValidForm);
+    const { errorMessage, valid } = this.formValidator.checkInputValidity(this.input);
+    this.formValidator.setErrorMessageState(this.input, errorMessage, valid);
   };
 }
