@@ -12,8 +12,7 @@ class Input {
     this.formValidator = formValidator;
   }
   handleInput = () => {
-    const isValidForm = this.formValidator.checkFormValidity().every(item => item.valid);
-    this.formValidator.setSubmitButtonState(isValidForm);
+    this.formValidator.setSubmitButtonState(this.formValidator.isValidForm);
     const { errorMessage, valid } = this.formValidator.checkInputValidity(this.input);
     this.formValidator.setErrorMessageState(this.input, errorMessage, valid);
   };

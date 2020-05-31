@@ -19,7 +19,7 @@ popupImageObj.setCloseButtonListeners();
 const formValidatorProfile = new FormValidator(formProfile);
 const formValidatorPlaceCard = new FormValidator(formPlaceCard);
 const userInfo = new UserInfo(fullName, job);
-const cardList = new CardList(placeList, initialCards, handleOpenPopupImage);
+const cardList = new CardList(placeList, initialCards);
 const formProfileObj = new FormProfile(
   formProfile,
   formValidatorProfile,
@@ -28,6 +28,11 @@ const formProfileObj = new FormProfile(
   fullName,
   job
 );
+
+const createCard = (name, link) => {
+  return new Card(name, link, handleOpenPopupImage);
+};
+
 const formPlaceCardObj = new FormPlaceCard(
   formPlaceCard,
   formValidatorPlaceCard,
@@ -37,9 +42,7 @@ const formPlaceCardObj = new FormPlaceCard(
 
 function handleOpenPopupImage(event) {
   if (event.target.classList.contains("place-card__image")) {
-    console.log(event.target);
     const link = event.target.style.backgroundImage.slice(5, -2);
-    console.log(link);
     const image = popupImage.querySelector(".popup__image");
 
     image.src = link;
@@ -90,10 +93,8 @@ const handleOpenPopupProfile = () => {
    * Надо исправить:
    * Данный код стоит перенести в отдельную функцию класса FormValidator
    */
-  const isValidForm = formValidatorProfile
-    .checkFormValidity()
-    .every(item => item.valid);
-  formValidatorProfile.setSubmitButtonState(isValidForm);
+
+  formValidatorProfile.setSubmitButtonState(formValidatorProfile.isValidForm);
 
   popupProfileObj.open();
   /**

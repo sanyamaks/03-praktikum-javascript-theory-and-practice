@@ -26,8 +26,6 @@ class Form {
 
   handleSubmitForm(event) {
     event.preventDefault();
-    this.isValidForm = this.formValidator
-      .checkFormValidity()
-      .every(item => item.valid);
+    this.isValidForm = this.formValidator.isValidForm;
   }
 }

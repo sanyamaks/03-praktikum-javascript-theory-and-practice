@@ -57,4 +57,8 @@ class FormValidator {
     input.setCustomValidity("");
     this.setErrorMessageState(input, "", true);
   };
+
+  isValidForm = () => this.form
+    .checkFormValidity()
+    .every(item => item.valid);
 }

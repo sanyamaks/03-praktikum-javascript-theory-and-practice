@@ -1,5 +1,5 @@
 class CardList {
-  constructor(placeList, initialCards, handleOpenPopupImage) {
+  constructor(placeList, initialCards) {
     /**
      * Надо исправить:
      * Использование глобальных переменных
@@ -7,7 +7,6 @@ class CardList {
      */
     this.placesList = placeList;
     this.cards = initialCards;
-    this.handleOpenPopupImage = handleOpenPopupImage;
   }
   renderCards() {
     this.cards.map(cardsItem => {
@@ -19,7 +18,7 @@ class CardList {
     });
   }
   addCard(name, link) {
-    const card = new Card(name, link, handleOpenPopupImage);
+    const card = createCard(name, link);
     const placeCard = card.create();
     card.setEventListeners(placeCard);
     this.placesList.appendChild(placeCard);
