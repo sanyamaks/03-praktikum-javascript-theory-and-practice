@@ -3,12 +3,11 @@ class Card {
    * Чтобы не создавать экземпляр класса Popup внутри класса Card, надо в script.js описать функцию, которая
    * сменит src в попапе и откроет его. Затем функцию передать в create, чтобы назначить ее в обработчик.
    */
-  constructor(name, link) {
+  constructor(name, link, handleOpenPopupImage) {
     this.card = null; // Можно лучше: null либо не объявлять свойство
     this.name = name;
     this.link = link;
-    this.popupImage = document.querySelector(".popup_image");
-    this.popup = new Popup(this.popupImage);
+    this.handleOpenPopupImage= handleOpenPopupImage;
   }
   create() {
     const placeCard = document.createElement("div");
@@ -48,17 +47,6 @@ class Card {
     event.target.closest(".places-list").removeChild(this.card);
   };
 
-  handleOpenPopupImage = event => {
-    if (event.target.classList.contains("place-card__image")) {
-      const image = this.popupImage.querySelector(".popup__image");
-      const link = event.target.style.backgroundImage.slice(5, -2);
-
-      image.src = link;
-
-      this.popup.open();
-    }
-  };
-
   setEventListeners(card) {
     card
       .querySelector(".place-card__image")
@@ -69,6 +57,5 @@ class Card {
     card
       .querySelector(".place-card__delete-icon")
       .addEventListener("click", this.remove);
-    this.popup.setCloseButtonListeners();
   }
 }

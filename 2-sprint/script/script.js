@@ -7,15 +7,19 @@ const fullName = document.querySelector(".user-info__name");
 const job = document.querySelector(".user-info__job");
 const popupProfile = document.querySelector(".popup_profile");
 const popupPlaceCard = document.querySelector(".popup_place-card");
+const popupImage = document.querySelector(".popup_image");
 const formProfile = popupProfile.querySelector(".popup__form");
 const formPlaceCard = popupPlaceCard.querySelector(".popup__form");
 const popupProfileObj = new Popup(popupProfile);
 popupProfileObj.setCloseButtonListeners();
 const popupPlaceCardObj = new Popup(popupPlaceCard);
 popupPlaceCardObj.setCloseButtonListeners();
+const popupImageObj = new Popup(popupImage);
+popupImageObj.setCloseButtonListeners();
 const formValidatorProfile = new FormValidator(formProfile);
 const formValidatorPlaceCard = new FormValidator(formPlaceCard);
 const userInfo = new UserInfo(fullName, job);
+const cardList = new CardList(placeList, initialCards, handleOpenPopupImage);
 const formProfileObj = new FormProfile(
   formProfile,
   formValidatorProfile,
@@ -27,9 +31,22 @@ const formProfileObj = new FormProfile(
 const formPlaceCardObj = new FormPlaceCard(
   formPlaceCard,
   formValidatorPlaceCard,
-  popupPlaceCardObj
+  popupPlaceCardObj,
+  cardList
 );
-const cardList = new CardList(placeList, initialCards);
+
+function handleOpenPopupImage(event) {
+  if (event.target.classList.contains("place-card__image")) {
+    console.log(event.target);
+    const link = event.target.style.backgroundImage.slice(5, -2);
+    console.log(link);
+    const image = popupImage.querySelector(".popup__image");
+
+    image.src = link;
+
+    popupImageObj.open();
+  }
+}
 
 const handleOpenPopupPlaceCard = () => {
 
