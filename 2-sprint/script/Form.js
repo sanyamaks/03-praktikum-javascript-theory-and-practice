@@ -1,9 +1,9 @@
 class Form {
-  constructor(form, formValidator, popup) {
+  constructor(form, formValidator) {
     this.form = form;
-    this.handleClosePopup = popup.handleClosePopup;
     this.formValidator = formValidator;
     this.handleSubmitForm = this.handleSubmitForm.bind(this);
+    this.handleInput = this.handleInput.bind(this);
   }
 
   handleForm() {
@@ -19,13 +19,19 @@ class Form {
        * Не создавать Input, а просто описать обработчик инпута здесь и назначить его.
        * Создание отдельного класса Input усложняет код и, по сути, использует имеющийся код в FormValidator.
        */
-      const inputObj = new Input(item, this.formValidator);
-      item.addEventListener("input", inputObj.handleInput);
+      item.addEventListener("input", this.handleInput);
     });
+  }
+
+  handleInput(event) {
+    this.formValidator.setSubmitButtonState(this.formValidator.isValidForm());
+    const { errorMessage, valid } = this.formValidator.checkInputValidity(
+      event.target
+    );
+    this.formValidator.setErrorMessageState(event.target, errorMessage, valid);
   }
 
   handleSubmitForm(event) {
     event.preventDefault();
-    this.isValidForm = this.formValidator.isValidForm;
   }
 }

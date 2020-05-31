@@ -24,5 +24,4 @@ class Popup {
   setCloseButtonListeners = () => {
     this.closeButton.addEventListener("click", this.close);
   };
-
 }

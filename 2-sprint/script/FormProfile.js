@@ -1,9 +1,9 @@
 class FormProfile extends Form {
   constructor(form, formValidator, popup, userInfo, fullName, job) {
-    super(form, formValidator, popup, userInfo);
+    super(form, formValidator);
     this.form = form;
-    this.popup = popup;
     this.formValidator = formValidator;
+    this.popup = popup;
     this.userInfo = userInfo;
     this.fullName = fullName;
     this.job = job;
@@ -11,7 +11,7 @@ class FormProfile extends Form {
   }
   handleSubmitForm(event) {
     super.handleSubmitForm(event);
-    if (this.isValidForm) {
+    if (this.formValidator.isValidForm()) {
       const { name, description } = this.form.elements;
       this.userInfo.updateUserInfo(
         {
@@ -21,7 +21,6 @@ class FormProfile extends Form {
         this.fullName,
         this.job
       );
-      this.formValidator.setSubmitButtonState(false);
       this.popup.close();
       this.form.reset();
       this.form.removeEventListener("submit", this.handleSubmitForm);

@@ -7,7 +7,7 @@ class Card {
     this.card = null; // Можно лучше: null либо не объявлять свойство
     this.name = name;
     this.link = link;
-    this.handleOpenPopupImage= handleOpenPopupImage;
+    this.handleOpenPopupImage = handleOpenPopupImage;
   }
   create() {
     const placeCard = document.createElement("div");
@@ -35,7 +35,7 @@ class Card {
     placeCardDescription.appendChild(placeCardLikeIcon);
 
     this.card = placeCard;
-
+    this.setEventListeners(this.card);
     return this.card;
   }
 

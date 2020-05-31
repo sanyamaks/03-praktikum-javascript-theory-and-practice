@@ -20,7 +20,6 @@ class CardList {
   addCard(name, link) {
     const card = createCard(name, link);
     const placeCard = card.create();
-    card.setEventListeners(placeCard);
     this.placesList.appendChild(placeCard);
   }
 }

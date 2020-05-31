@@ -1,14 +1,15 @@
 class FormPlaceCard extends Form {
   constructor(form, formValidator, popup, cardList) {
-    super(form, formValidator, popup);
+    super(form, formValidator);
     this.form = form;
+    this.formValidator = formValidator;
     this.popup = popup;
     this.cardList = cardList;
     this.handleSubmitForm = this.handleSubmitForm.bind(this);
   }
   handleSubmitForm(event) {
     super.handleSubmitForm(event);
-    if (this.isValidForm) {
+    if (this.formValidator.isValidForm()) {
       const { name, link } = this.form.elements;
       // Надо исправить: не создавать экземпляры других классов
       // Надо исправить: не использовать глобальную переменную
@@ -18,7 +19,6 @@ class FormPlaceCard extends Form {
        * 1. Лучше сохранить this.popup и здесь вызывать this.popup.close()
        * 2. Перенести сброс формы из handleClosePopup сюда.
        */
-      this.formValidator.setSubmitButtonState(false);
       this.popup.close();
       this.form.reset();
       this.form.removeEventListener("submit", this.handleSubmitForm);

@@ -28,17 +28,16 @@ const formProfileObj = new FormProfile(
   fullName,
   job
 );
-
-const createCard = (name, link) => {
-  return new Card(name, link, handleOpenPopupImage);
-};
-
 const formPlaceCardObj = new FormPlaceCard(
   formPlaceCard,
   formValidatorPlaceCard,
   popupPlaceCardObj,
   cardList
 );
+
+const createCard = (name, link) => {
+  return new Card(name, link, handleOpenPopupImage);
+};
 
 function handleOpenPopupImage(event) {
   if (event.target.classList.contains("place-card__image")) {
@@ -52,12 +51,8 @@ function handleOpenPopupImage(event) {
 }
 
 const handleOpenPopupPlaceCard = () => {
-
-
-  formPlaceCard.reset();
-  formValidatorPlaceCard.resetErrorMessage(formPlaceCard.name, "", true);
-  formValidatorPlaceCard.resetErrorMessage(formPlaceCard.link, "", true);
-
+  formValidatorPlaceCard.resetErrorMessage();
+  formValidatorPlaceCard.setSubmitButtonState(false);
   popupPlaceCardObj.open();
   formPlaceCardObj.handleForm();
 };
@@ -84,10 +79,10 @@ const handleOpenPopupProfile = () => {
    *
    * То же самое касается и handleOpenPopupPlaceCard
    */
-  formProfile.name.value = userInfo.name;
-  formProfile.description.value = userInfo.description;
-  formValidatorProfile.resetErrorMessage(formProfile.name, "", true); //Отдельная очистка ошибок здесь для того, если форма закроется по кнопке "Закрыть"
-  formValidatorProfile.resetErrorMessage(formProfile.description, "", true);
+  const { name, description } = { ...userInfo };
+  formProfile.name.defaultValue = name;
+  formProfile.description.defaultValue = description;
+  formValidatorProfile.resetErrorMessage();
 
   /**
    * Надо исправить:

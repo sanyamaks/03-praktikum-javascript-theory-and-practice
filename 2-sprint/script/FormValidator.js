@@ -53,12 +53,16 @@ class FormValidator {
     }
   };
 
-  resetErrorMessage = input => {
-    input.setCustomValidity("");
-    this.setErrorMessageState(input, "", true);
+  resetErrorMessage = () => {
+    const elements = Array.from(this.form.querySelectorAll("input"));
+    elements.forEach(element => {
+      element.setCustomValidity("");
+      this.setErrorMessageState(element, "", true);
+    });
+    this.form.reset();
   };
 
-  isValidForm = () => this.form
-    .checkFormValidity()
-    .every(item => item.valid);
+  isValidForm = () => {
+    return this.checkFormValidity().every(item => item.valid);
+  };
 }
