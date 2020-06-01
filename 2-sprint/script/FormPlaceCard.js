@@ -10,11 +10,8 @@ class FormPlaceCard extends Form {
      * Следует перенести в конструктор
      */
     super(form, formValidator);
-    this.form = form;
-    this.formValidator = formValidator;
     this.popup = popup;
     this.cardList = cardList;
-    this.handleSubmitForm = this.handleSubmitForm.bind(this);
   }
   handleSubmitForm(event) {
     super.handleSubmitForm(event);

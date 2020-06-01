@@ -19,25 +19,25 @@ popupImageObj.setCloseButtonListeners();
 const formValidatorProfile = new FormValidator(formProfile);
 const formValidatorPlaceCard = new FormValidator(formPlaceCard);
 const userInfo = new UserInfo(fullName, job);
-const cardList = new CardList(placeList, initialCards);
+const cardList = new CardList(placeList, initialCards, createCard);
 const formProfileObj = new FormProfile(
   formProfile,
   formValidatorProfile,
   popupProfileObj,
-  userInfo,
-  fullName,
-  job
+  userInfo
 );
+formProfileObj.setEventListeners();
 const formPlaceCardObj = new FormPlaceCard(
   formPlaceCard,
   formValidatorPlaceCard,
   popupPlaceCardObj,
   cardList
 );
+formPlaceCardObj.setEventListeners();
 
-const createCard = (name, link) => {
+function createCard(name, link) {
   return new Card(name, link, handleOpenPopupImage);
-};
+}
 
 function handleOpenPopupImage(event) {
   if (event.target.classList.contains("place-card__image")) {
@@ -54,7 +54,7 @@ const handleOpenPopupPlaceCard = () => {
   formValidatorPlaceCard.resetErrorMessage();
   formValidatorPlaceCard.setSubmitButtonState(false);
   popupPlaceCardObj.open();
-  formPlaceCardObj.handleForm();
+  formPlaceCardObj.setFocusOnFirstInput();
 };
 
 const handleOpenPopupProfile = () => {
@@ -78,7 +78,6 @@ const handleOpenPopupProfile = () => {
    * Перенести в resetErrorMessage()
    */
   formValidatorProfile.setSubmitButtonState(formValidatorProfile.isValidForm);
-
   popupProfileObj.open();
   /**
    * Надо исправить:
@@ -92,7 +91,7 @@ const handleOpenPopupProfile = () => {
    * Не исправлено: обработчики устанавливаются при каждом открытии попапа
    * Следует вызывать setEventListenersFormProfile сразу после создания обхекта formProfileObj
    */
-  formProfileObj.handleForm();
+  formProfileObj.setFocusOnFirstInput();
 };
 
 openPopupPlaceCardButton.addEventListener("click", handleOpenPopupPlaceCard);

@@ -1,5 +1,5 @@
 class FormProfile extends Form {
-  constructor(form, formValidator, popup, userInfo, fullName, job) {
+  constructor(form, formValidator, popup, userInfo) {
     /**
      * Надо исправить:
      * Дублирование кода.
@@ -11,13 +11,8 @@ class FormProfile extends Form {
      * Если перенести fullName и job в класс UserInfo, то в этом классе необходимо будет только запомнить userInfo
      */
     super(form, formValidator);
-    this.form = form;
-    this.formValidator = formValidator;
     this.popup = popup;
     this.userInfo = userInfo;
-    this.fullName = fullName;
-    this.job = job;
-    this.handleSubmitForm = this.handleSubmitForm.bind(this);
   }
   handleSubmitForm(event) {
     super.handleSubmitForm(event);
@@ -28,8 +23,8 @@ class FormProfile extends Form {
           name: name.value,
           description: description.value
         },
-        this.fullName,
-        this.job
+        this.userInfo.fullName,
+        this.userInfo.job
       );
       this.popup.close();
       this.form.reset();

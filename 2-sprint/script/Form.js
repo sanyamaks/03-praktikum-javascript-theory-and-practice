@@ -6,9 +6,9 @@ class Form {
     this.handleInput = this.handleInput.bind(this);
   }
 
-  handleForm() {
+  setFocusOnFirstInput() {
+    console.log("focus");
     this.form.querySelector("input").focus();
-    this.setEventListenersFormProfile();
   }
 
   /**
@@ -16,8 +16,9 @@ class Form {
    * setFormEventListeners,
    * Так как этот метод применяется для любой формы.
    */
-  setEventListenersFormProfile() {
-    this.form.addEventListener("submit", this.handleSubmitForm);
+  setEventListeners() {
+    console.log("listeners");
+    this.form.addEventListener("submit", () => this.handleSubmitForm(event));
     Array(...this.form.querySelectorAll("input")).forEach(item => {
       item.addEventListener("input", this.handleInput);
     });

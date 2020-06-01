@@ -41,6 +41,17 @@ class Card {
 
   remove = event => {
     event.target.closest(".places-list").removeChild(this.card);
+    this.card
+      .querySelector(".place-card__image")
+      .removeEventListener("click", this.handleOpenPopupImage);
+    this.card
+      .querySelector(".place-card__like-icon")
+      .removeEventListener("click", this.like);
+    this.card
+      .querySelector(".place-card__delete-icon")
+      .removeEventListener("click", this.remove);
+    console.log(this.card);
+    this.card = null;
     /**
      * Можно лучше:
      * this.card = null;
@@ -53,14 +64,14 @@ class Card {
    * Можно лучше:
    * Вместо card использовать this.card
    */
-  setEventListeners(card) {
-    card
+  setEventListeners() {
+    this.card
       .querySelector(".place-card__image")
       .addEventListener("click", this.handleOpenPopupImage);
-    card
+    this.card
       .querySelector(".place-card__like-icon")
       .addEventListener("click", this.like);
-    card
+    this.card
       .querySelector(".place-card__delete-icon")
       .addEventListener("click", this.remove);
   }
