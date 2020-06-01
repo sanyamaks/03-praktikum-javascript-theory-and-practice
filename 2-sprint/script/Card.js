@@ -1,8 +1,4 @@
 class Card {
-  /**
-   * Чтобы не создавать экземпляр класса Popup внутри класса Card, надо в script.js описать функцию, которая
-   * сменит src в попапе и откроет его. Затем функцию передать в create, чтобы назначить ее в обработчик.
-   */
   constructor(name, link, handleOpenPopupImage) {
     this.card = null; // Можно лучше: null либо не объявлять свойство
     this.name = name;
@@ -45,8 +41,18 @@ class Card {
 
   remove = event => {
     event.target.closest(".places-list").removeChild(this.card);
+    /**
+     * Можно лучше:
+     * this.card = null;
+     * Таким образом сборщик мусора сможет удалить из памяти этот элемент, т.к. мы больше не храним ссылок на него.
+     * Также еще можно удалять обработчики с this.card.
+     */
   };
 
+  /**
+   * Можно лучше:
+   * Вместо card использовать this.card
+   */
   setEventListeners(card) {
     card
       .querySelector(".place-card__image")

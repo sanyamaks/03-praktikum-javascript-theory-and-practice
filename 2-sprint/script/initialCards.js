@@ -1,8 +1,3 @@
-/**
- * Надо исправить:
- * Необходимо использовать const, т.к. значение переменной не меняется.
- * (https://learn.javascript.ru/let-const)
- */
 const initialCards = [
   {
     name: "Архыз",

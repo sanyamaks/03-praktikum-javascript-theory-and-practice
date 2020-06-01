@@ -1,5 +1,14 @@
 class FormPlaceCard extends Form {
   constructor(form, formValidator, popup, cardList) {
+    /**
+     * Надо исправить:
+     * Дублирование кода.
+     * Строки
+     * this.form = form;
+     * this.formValidator = formValidator;
+     * this.handleSubmitForm = this.handleSubmitForm.bind(this);
+     * Следует перенести в конструктор
+     */
     super(form, formValidator);
     this.form = form;
     this.formValidator = formValidator;
@@ -11,13 +20,30 @@ class FormPlaceCard extends Form {
     super.handleSubmitForm(event);
     if (this.formValidator.isValidForm()) {
       const { name, link } = this.form.elements;
-      // Надо исправить: не создавать экземпляры других классов
-      // Надо исправить: не использовать глобальную переменную
       this.cardList.addCard(name.value, link.value);
       /**
-       * Надо исправить:
-       * 1. Лучше сохранить this.popup и здесь вызывать this.popup.close()
-       * 2. Перенести сброс формы из handleClosePopup сюда.
+       * Можно лучше:
+       * Дублирование кода.
+       * Можно вынести в класс Form в метод afterSubmit(название примерное) и вызывать его с помощью super.
+       *
+       * Еще лучше:
+       * Перенести весь код внутрь Form, но в теле вызывать this.onSubmit(название примерное), описать его пустым
+       * и уже реализовать в дочерних классах.
+       * Пример:
+       * class Button {
+       *   handleClick() {
+       *     ...какие-то действия...
+       *     this.onClick()
+       *     ...какие-то действия...
+       *   }
+       *   onClick() {}
+       * }
+       *
+       * class AlertButton extends Button {
+       *   onClick() {
+       *     alert('clicked!');
+       *   }
+       * }
        */
       this.popup.close();
       this.form.reset();

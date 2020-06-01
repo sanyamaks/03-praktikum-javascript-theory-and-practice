@@ -11,14 +11,14 @@ class Form {
     this.setEventListenersFormProfile();
   }
 
+  /**
+   * Можно лучше:
+   * setFormEventListeners,
+   * Так как этот метод применяется для любой формы.
+   */
   setEventListenersFormProfile() {
     this.form.addEventListener("submit", this.handleSubmitForm);
     Array(...this.form.querySelectorAll("input")).forEach(item => {
-      /**
-       * Можно лучше:
-       * Не создавать Input, а просто описать обработчик инпута здесь и назначить его.
-       * Создание отдельного класса Input усложняет код и, по сути, использует имеющийся код в FormValidator.
-       */
       item.addEventListener("input", this.handleInput);
     });
   }

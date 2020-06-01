@@ -4,11 +4,6 @@ class FormValidator {
   }
 
   checkFormValidity = () => {
-    /**
-     * Можно лучше:
-     * Чтобы не проверять на то, является ли элемент input'ом, можно сразу выбрать только те элементы, которые
-     * имеют класс .popup__input с помощью this.form.querySelectorAll()
-     */
     const elements = Array.from(this.form.querySelectorAll("input"));
     return elements.reduce((arr, item) => {
       arr.push(this.checkInputValidity(item));
