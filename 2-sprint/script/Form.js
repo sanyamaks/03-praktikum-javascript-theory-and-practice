@@ -7,17 +7,27 @@ class Form {
   }
 
   setFocusOnFirstInput() {
+    /**
+     * Можно лучше:
+     * Убрать отладочный вывод в консоль
+     */
     console.log("focus");
     this.form.querySelector("input").focus();
   }
 
-  /**
-   * Можно лучше:
-   * setFormEventListeners,
-   * Так как этот метод применяется для любой формы.
-   */
   setEventListeners() {
+    /**
+     * Можно лучше:
+     * Убрать отладочный вывод в консоль
+     */
     console.log("listeners");
+    /**
+     * Можно лучше:
+     * Не использовать глобальный event
+     * Варианты, которые допустимы:
+     * this.form.addEventListener("submit", this.handleSubmitForm); - предпочтительный
+     * this.form.addEventListener("submit", (event) => this.handleSubmitForm(event));
+     */
     this.form.addEventListener("submit", () => this.handleSubmitForm(event));
     Array(...this.form.querySelectorAll("input")).forEach(item => {
       item.addEventListener("input", this.handleInput);

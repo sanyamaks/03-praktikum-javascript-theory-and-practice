@@ -1,12 +1,10 @@
 class FormPlaceCard extends Form {
   constructor(form, formValidator, popup, cardList) {
     /**
-     * Надо исправить:
+     * Можно лучше:
      * Дублирование кода.
-     * Строки
-     * this.form = form;
-     * this.formValidator = formValidator;
-     * this.handleSubmitForm = this.handleSubmitForm.bind(this);
+     * Строку
+     * this.popup = popup
      * Следует перенести в конструктор
      */
     super(form, formValidator);

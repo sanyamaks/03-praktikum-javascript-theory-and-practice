@@ -1,14 +1,11 @@
 class FormProfile extends Form {
   constructor(form, formValidator, popup, userInfo) {
     /**
-     * Надо исправить:
+     * Можно лучше:
      * Дублирование кода.
-     * Строки
-     * this.form = form;
-     * this.formValidator = formValidator;
-     * this.handleSubmitForm = this.handleSubmitForm.bind(this);
+     * Строку
+     * this.popup = popup
      * Следует перенести в конструктор
-     * Если перенести fullName и job в класс UserInfo, то в этом классе необходимо будет только запомнить userInfo
      */
     super(form, formValidator);
     this.popup = popup;

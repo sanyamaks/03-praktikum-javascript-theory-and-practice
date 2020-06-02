@@ -40,7 +40,15 @@ class Card {
   };
 
   remove = event => {
+    /**
+     * Можно лучше:
+     * this.card.remove()
+     */
     event.target.closest(".places-list").removeChild(this.card);
+    /**
+     * Можно лучше:
+     * Вынести в отдельный метод removeEventListeners
+     */
     this.card
       .querySelector(".place-card__image")
       .removeEventListener("click", this.handleOpenPopupImage);
@@ -50,14 +58,12 @@ class Card {
     this.card
       .querySelector(".place-card__delete-icon")
       .removeEventListener("click", this.remove);
-    console.log(this.card);
-    this.card = null;
     /**
      * Можно лучше:
-     * this.card = null;
-     * Таким образом сборщик мусора сможет удалить из памяти этот элемент, т.к. мы больше не храним ссылок на него.
-     * Также еще можно удалять обработчики с this.card.
+     * Убрать отладочный вывод в консоль
      */
+    console.log(this.card);
+    this.card = null;
   };
 
   /**

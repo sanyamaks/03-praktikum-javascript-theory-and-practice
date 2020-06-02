@@ -19,6 +19,10 @@ popupImageObj.setCloseButtonListeners();
 const formValidatorProfile = new FormValidator(formProfile);
 const formValidatorPlaceCard = new FormValidator(formPlaceCard);
 const userInfo = new UserInfo(fullName, job);
+/**
+ * Можно лучше:
+ * Обращатсья к createCard после объявления функции
+ */
 const cardList = new CardList(placeList, initialCards, createCard);
 const formProfileObj = new FormProfile(
   formProfile,
@@ -79,18 +83,6 @@ const handleOpenPopupProfile = () => {
    */
   formValidatorProfile.setSubmitButtonState(formValidatorProfile.isValidForm);
   popupProfileObj.open();
-  /**
-   * Надо исправить:
-   * Нет необходимости снимать/назначать обработчики.
-   * Достаточно установить их про создании объекта.
-   * Например: клик по кнопке, открывающей попап, невозможен при открытом попапе, т.к. слой попапа находится над
-   * слоем с кнопкой.
-   *
-   * То же самое касается и handleOpenPopupPlaceCard
-   *
-   * Не исправлено: обработчики устанавливаются при каждом открытии попапа
-   * Следует вызывать setEventListenersFormProfile сразу после создания обхекта formProfileObj
-   */
   formProfileObj.setFocusOnFirstInput();
 };
 
@@ -100,12 +92,10 @@ editProfileButton.addEventListener("click", handleOpenPopupProfile);
 cardList.renderCards();
 
 /**
- * Удалил исправленные замечания.
+ * Критические замечания исправлены - работа принята.
  *
- * Надо исправить:
- * 1. Исправить дублирование кода в дочерних классах класса Form.
- * 2. Исправить Использование глобальной функции createCard
- * 3. Исправить установку обработчиков - комментарий выше
- *
- * Внимание: работа принимается при исправлении всех замечаний с пометкой "Надо исправить".
+ * Просьба в будущем не оставлять без внимания не критичные комментарии.
+ * Рефакторинг - неотъемлемая часть работы программиста.
+ * Всегда нужно стараться делать код лучше.
+ * Рекомендую поработать с классом Form и его дочерними классами
  */
