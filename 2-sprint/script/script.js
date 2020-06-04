@@ -19,10 +19,11 @@ popupImageObj.setCloseButtonListeners();
 const formValidatorProfile = new FormValidator(formProfile);
 const formValidatorPlaceCard = new FormValidator(formPlaceCard);
 const userInfo = new UserInfo(fullName, job);
-/**
- * Можно лучше:
- * Обращатсья к createCard после объявления функции
- */
+
+const createCard = (name, link) => {
+  return new Card(name, link, handleOpenPopupImage);
+};
+
 const cardList = new CardList(placeList, initialCards, createCard);
 const formProfileObj = new FormProfile(
   formProfile,
@@ -39,10 +40,6 @@ const formPlaceCardObj = new FormPlaceCard(
 );
 formPlaceCardObj.setEventListeners();
 
-function createCard(name, link) {
-  return new Card(name, link, handleOpenPopupImage);
-}
-
 function handleOpenPopupImage(event) {
   if (event.target.classList.contains("place-card__image")) {
     const link = event.target.style.backgroundImage.slice(5, -2);
@@ -56,7 +53,6 @@ function handleOpenPopupImage(event) {
 
 const handleOpenPopupPlaceCard = () => {
   formValidatorPlaceCard.resetErrorMessage();
-  formValidatorPlaceCard.setSubmitButtonState(false);
   popupPlaceCardObj.open();
   formPlaceCardObj.setFocusOnFirstInput();
 };
@@ -76,12 +72,6 @@ const handleOpenPopupProfile = () => {
   formProfile.name.defaultValue = name;
   formProfile.description.defaultValue = description;
   formValidatorProfile.resetErrorMessage();
-
-  /**
-   * Можно лучше:
-   * Перенести в resetErrorMessage()
-   */
-  formValidatorProfile.setSubmitButtonState(formValidatorProfile.isValidForm);
   popupProfileObj.open();
   formProfileObj.setFocusOnFirstInput();
 };
@@ -90,12 +80,3 @@ openPopupPlaceCardButton.addEventListener("click", handleOpenPopupPlaceCard);
 editProfileButton.addEventListener("click", handleOpenPopupProfile);
 
 cardList.renderCards();
-
-/**
- * Критические замечания исправлены - работа принята.
- *
- * Просьба в будущем не оставлять без внимания не критичные комментарии.
- * Рефакторинг - неотъемлемая часть работы программиста.
- * Всегда нужно стараться делать код лучше.
- * Рекомендую поработать с классом Form и его дочерними классами
- */

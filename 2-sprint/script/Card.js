@@ -1,6 +1,6 @@
 class Card {
   constructor(name, link, handleOpenPopupImage) {
-    this.card = null; // Можно лучше: null либо не объявлять свойство
+    this.card = null;
     this.name = name;
     this.link = link;
     this.handleOpenPopupImage = handleOpenPopupImage;
@@ -39,37 +39,12 @@ class Card {
     event.currentTarget.classList.toggle("place-card__like-icon_liked");
   };
 
-  remove = event => {
-    /**
-     * Можно лучше:
-     * this.card.remove()
-     */
-    event.target.closest(".places-list").removeChild(this.card);
-    /**
-     * Можно лучше:
-     * Вынести в отдельный метод removeEventListeners
-     */
-    this.card
-      .querySelector(".place-card__image")
-      .removeEventListener("click", this.handleOpenPopupImage);
-    this.card
-      .querySelector(".place-card__like-icon")
-      .removeEventListener("click", this.like);
-    this.card
-      .querySelector(".place-card__delete-icon")
-      .removeEventListener("click", this.remove);
-    /**
-     * Можно лучше:
-     * Убрать отладочный вывод в консоль
-     */
-    console.log(this.card);
+  remove = () => {
+    this.card.remove();
+    this.removeEventListeners();
     this.card = null;
   };
 
-  /**
-   * Можно лучше:
-   * Вместо card использовать this.card
-   */
   setEventListeners() {
     this.card
       .querySelector(".place-card__image")
@@ -80,5 +55,17 @@ class Card {
     this.card
       .querySelector(".place-card__delete-icon")
       .addEventListener("click", this.remove);
+  }
+
+  removeEventListeners() {
+    this.card
+      .querySelector(".place-card__image")
+      .removeEventListener("click", this.handleOpenPopupImage);
+    this.card
+      .querySelector(".place-card__like-icon")
+      .removeEventListener("click", this.like);
+    this.card
+      .querySelector(".place-card__delete-icon")
+      .removeEventListener("click", this.remove);
   }
 }

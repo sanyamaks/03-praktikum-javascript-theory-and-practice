@@ -6,10 +6,6 @@ class UserInfo {
     this.description = this.job.textContent;
   }
 
-  /**
-   * Можно лучше:
-   * Хранить fullName и job в полях класса.
-   */
   updateUserInfo(userInfo) {
     const { name, description } = userInfo;
     this.name = name;

@@ -1,34 +1,18 @@
 class Form {
-  constructor(form, formValidator) {
+  constructor(form, formValidator, popup) {
     this.form = form;
     this.formValidator = formValidator;
+    this.popup = popup;
     this.handleSubmitForm = this.handleSubmitForm.bind(this);
     this.handleInput = this.handleInput.bind(this);
   }
 
   setFocusOnFirstInput() {
-    /**
-     * Можно лучше:
-     * Убрать отладочный вывод в консоль
-     */
-    console.log("focus");
     this.form.querySelector("input").focus();
   }
 
   setEventListeners() {
-    /**
-     * Можно лучше:
-     * Убрать отладочный вывод в консоль
-     */
-    console.log("listeners");
-    /**
-     * Можно лучше:
-     * Не использовать глобальный event
-     * Варианты, которые допустимы:
-     * this.form.addEventListener("submit", this.handleSubmitForm); - предпочтительный
-     * this.form.addEventListener("submit", (event) => this.handleSubmitForm(event));
-     */
-    this.form.addEventListener("submit", () => this.handleSubmitForm(event));
+    this.form.addEventListener("submit", this.handleSubmitForm);
     Array(...this.form.querySelectorAll("input")).forEach(item => {
       item.addEventListener("input", this.handleInput);
     });
@@ -42,7 +26,13 @@ class Form {
     this.formValidator.setErrorMessageState(event.target, errorMessage, valid);
   }
 
-  handleSubmitForm(event) {
-    event.preventDefault();
-  }
+  handleSubmitForm = evt => {
+    evt.preventDefault();
+    if (this.formValidator.isValidForm()) {
+      this.onSubmit(...this.form.elements);
+      this.popup.close();
+      this.form.reset();
+    }
+  };
+  onSubmit() {}
 }
