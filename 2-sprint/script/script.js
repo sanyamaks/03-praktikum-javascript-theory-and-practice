@@ -40,6 +40,22 @@ const formPlaceCardObj = new FormPlaceCard(
 );
 formPlaceCardObj.setEventListeners();
 
+const api = new Api({
+  baseUrl: 'https://praktikum.tk/cohort11',
+  headers: {
+    authorization: "4f5e3621-964f-4d58-88fd-12f1d002534a",
+    'Content-Type': 'application/json'
+  }
+});
+// api.getInfoUser();
+api.getInitialCards();
+// api.updateUserInfo();
+// api.addCard();
+// api.removeCard("5edbe03c8b302e001f0be86c");
+// api.putLike("5ed4c882a5831b001f2e976b");
+// api.removeLike("5ed4c882a5831b001f2e976b");
+// api.updateUserAvatar("https://twizz.ru/wp-content/uploads/2019/09/1569240341_18bdcbc66f6127d9909b58b7b0dbd14e.jpg");
+
 function handleOpenPopupImage(event) {
   if (event.target.classList.contains("place-card__image")) {
     const link = event.target.style.backgroundImage.slice(5, -2);
@@ -68,7 +84,7 @@ const handleOpenPopupProfile = () => {
    * defaultValue нужно изменять только при сохранении формы
    * (в handleSubmitForm класса FormProfile перед обновлением userInfo)
    */
-  const { name, description } = { ...userInfo };
+  const {name, description} = {...userInfo};
   formProfile.name.defaultValue = name;
   formProfile.description.defaultValue = description;
   formValidatorProfile.resetErrorMessage();
