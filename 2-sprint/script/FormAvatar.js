@@ -1,9 +1,9 @@
 class FormAvatar extends Form {
-  constructor(form, formValidator, popup) {
-    super(form, formValidator, popup);
+  constructor(form, formValidator, popup, api) {
+    super(form, formValidator, popup, api);
   }
-  onSubmit() {
+  onSubmit(link) {
     super.onSubmit();
-    console.log(1);
+    this.api.updateUserAvatar({avatar: link.value}, this);
   }
 }

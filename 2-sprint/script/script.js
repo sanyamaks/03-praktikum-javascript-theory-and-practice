@@ -6,6 +6,7 @@ const openPopupAvatarButton = document.querySelector(".user-info__photo");
 const placeList = document.querySelector(".places-list");
 const fullName = document.querySelector(".user-info__name");
 const job = document.querySelector(".user-info__job");
+const avatar = document.querySelector(".user-info__photo");
 const popupProfile = document.querySelector(".popup_profile");
 const popupPlaceCard = document.querySelector(".popup_place-card");
 const popupImage = document.querySelector(".popup_image");
@@ -24,9 +25,9 @@ popupAvatarObj.setCloseButtonListeners();
 const formValidatorProfile = new FormValidator(formProfile);
 const formValidatorPlaceCard = new FormValidator(formPlaceCard);
 const formValidatorAvatar = new FormValidator(formAvatar);
-const userInfo = new UserInfo(fullName, job);
+const userInfo = new UserInfo(fullName, job, avatar);
 
-const createCard = (card) => {
+const createCard = card => {
   return new Card(card, handleOpenPopupImage);
 };
 
@@ -36,17 +37,17 @@ const api = new Api(
     baseUrl: "https://praktikum.tk/cohort11",
     headers: {
       authorization: "4f5e3621-964f-4d58-88fd-12f1d002534a",
-      "Content-Type": "application/json",
-    },
+      "Content-Type": "application/json"
+    }
   },
   userInfo,
   cardList
 );
+
 const formProfileObj = new FormProfile(
   formProfile,
   formValidatorProfile,
   popupProfileObj,
-  userInfo,
   api
 );
 formProfileObj.setEventListeners();
@@ -54,13 +55,14 @@ const formPlaceCardObj = new FormPlaceCard(
   formPlaceCard,
   formValidatorPlaceCard,
   popupPlaceCardObj,
-  cardList
+  api
 );
 formPlaceCardObj.setEventListeners();
 const formAvatarObj = new FormAvatar(
   formAvatar,
   formValidatorAvatar,
-  popupAvatarObj
+  popupAvatarObj,
+  api
 );
 formAvatarObj.setEventListeners();
 
@@ -89,16 +91,6 @@ const handleOpenPopupPlaceCard = () => {
 };
 
 const handleOpenPopupProfile = () => {
-  /**
-   * Можно лучше:
-   * Не обращаться к полям напрямую, а реализовать метод который вернет объект с информацией.
-   * В терминологии ООП это называется геттер
-   * Подробнее: https://learn.javascript.ru/private-protected-properties-methods
-   *
-   * Можно лучше:
-   * defaultValue нужно изменять только при сохранении формы
-   * (в handleSubmitForm класса FormProfile перед обновлением userInfo)
-   */
   const { name, description } = { ...userInfo };
   formProfile.name.defaultValue = name;
   formProfile.description.defaultValue = description;

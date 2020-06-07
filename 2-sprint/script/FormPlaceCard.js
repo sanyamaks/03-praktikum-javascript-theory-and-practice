@@ -1,10 +1,9 @@
 class FormPlaceCard extends Form {
-  constructor(form, formValidator, popup, cardList) {
-    super(form, formValidator, popup);
-    this.cardList = cardList;
+  constructor(form, formValidator, popup) {
+    super(form, formValidator, popup, api);
   }
   onSubmit(name, link) {
     super.onSubmit();
-    this.cardList.addCard({ name: name.value, link: link.value, likes: [] });
+    this.api.addCard({ name: name.value, link: link.value }, this);
   }
 }

@@ -1,8 +1,10 @@
 class Form {
-  constructor(form, formValidator, popup) {
+  constructor(form, formValidator, popup, api) {
     this.form = form;
     this.formValidator = formValidator;
     this.popup = popup;
+    this.api = api;
+    this.textButton = this.form.querySelector("button").textContent;
     this.handleSubmitForm = this.handleSubmitForm.bind(this);
     this.handleInput = this.handleInput.bind(this);
   }
@@ -30,9 +32,19 @@ class Form {
     evt.preventDefault();
     if (this.formValidator.isValidForm()) {
       this.onSubmit(...this.form.elements);
-      this.popup.close();
-      this.form.reset();
     }
   };
+  closePopup() {
+    this.popup.close();
+    this.form.reset();
+  }
+
   onSubmit() {}
+  renderLoading(isLoading) {
+    if (isLoading) {
+      this.form.querySelector("button").textContent = "Загрузка...";
+    } else {
+      this.form.querySelector("button").textContent = this.textButton;
+    }
+  }
 }
