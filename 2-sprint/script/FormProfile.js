@@ -4,7 +4,7 @@ class FormProfile extends Form {
     this.userInfo = userInfo;
     this.api = api;
   }
-  onSubmit() {
+  onSubmit(name, about) {
     super.onSubmit();
     this.api.updateUserInfo(
       {

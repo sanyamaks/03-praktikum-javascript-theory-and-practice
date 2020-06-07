@@ -10,7 +10,7 @@ class Api {
       .then((res) => {
         return this.isResolve(res);
       })
-      .then((cards) => this.cardList.renderCards(cards))
+      .then((cards) => {console.log(cards); this.cardList.renderCards(cards, this.userID, this)})
       .catch((err) => console.log(err));
   }
 
@@ -21,7 +21,11 @@ class Api {
       .then((res) => {
         return this.isResolve(res);
       })
-      .then((userInfo) => this.userInfo.updateUserInfo(userInfo))
+      .then((userInfo) => {
+        console.log(userInfo);
+        this.userID = userInfo._id;
+        this.userInfo.updateUserInfo(userInfo);
+      })
       .catch((err) => console.log(err));
   }
 
@@ -38,15 +42,11 @@ class Api {
       .catch((err) => console.log(err));
   }
 
-  addCard() {
+  addCard(card) {
     fetch(this.options.baseUrl + "/cards", {
       method: "POST",
       headers: this.options.headers,
-      body: JSON.stringify({
-        name: "TestCard",
-        link:
-          "https://bipbap.ru/wp-content/uploads/2017/10/0_8eb56_842bba74_XL-640x400.jpg",
-      }),
+      body: JSON.stringify(card),
     })
       .then((res) => {
         return this.isResolve(res);
@@ -55,8 +55,9 @@ class Api {
       .catch((err) => console.log(err));
   }
 
-  removeCard(cardId) {
-    fetch(this.options.baseUrl + "/cards/" + cardId, {
+  removeCard(card) {
+    this.card = card;
+    fetch(this.options.baseUrl + "/cards/" + this.card.cardInfo._id, {
       method: "DELETE",
       headers: this.options.headers,
     })
@@ -67,27 +68,29 @@ class Api {
       .catch((err) => console.log(err));
   }
 
-  putLike(cardId) {
-    fetch(this.options.baseUrl + "/cards/like/" + cardId, {
+  putLike(card) {
+    this.card = card;
+    fetch(this.options.baseUrl + "/cards/like/" + this.card.cardInfo._id, {
       method: "PUT",
       headers: this.options.headers,
     })
       .then((res) => {
         return this.isResolve(res);
       })
-      .then((res) => console.log(res))
+      .then((card) => this.card.changeNumberLikes(card))
       .catch((err) => console.log(err));
   }
 
-  removeLike(cardId) {
-    fetch(this.options.baseUrl + "/cards/like/" + cardId, {
+  removeLike(card) {
+    this.card = card;
+    fetch(this.options.baseUrl + "/cards/like/" + this.card.cardInfo._id, {
       method: "DELETE",
       headers: this.options.headers,
     })
       .then((res) => {
         return this.isResolve(res);
       })
-      .then((res) => console.log(res))
+      .then((card) => this.card.changeNumberLikes(card))
       .catch((err) => console.log(err));
   }
 

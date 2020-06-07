@@ -1,5 +1,5 @@
 class UserInfo {
-  constructor(fullName, job, api) {
+  constructor(fullName, job) {
     this.fullName = fullName;
     this.job = job;
     this.name = this.fullName.textContent;

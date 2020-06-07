@@ -4,7 +4,9 @@ class Card {
     this.cardInfo = cardInfo;
     this.handleOpenPopupImage = handleOpenPopupImage;
   }
-  create() {
+  create(userID, api) {
+    this.userID = userID;
+    this.api = api;
     const placeCard = document.createElement("div");
     const placeCardImage = document.createElement("div");
     const placeCardDeleteIcon = document.createElement("button");
@@ -27,6 +29,9 @@ class Card {
     placeCardImage.style.backgroundImage = `url(${this.cardInfo.link})`;
     placeCardName.textContent = `${this.cardInfo.name}`;
     placeCardNumberLikes.textContent = `${this.cardInfo.likes.length}`;
+    if (this.isLike()) {
+      placeCardLikeIcon.classList.toggle("place-card__like-icon_liked");
+    }
 
     placeCard.appendChild(placeCardImage);
     placeCard.appendChild(placeCardDescription);
@@ -37,15 +42,31 @@ class Card {
     placeCardLikeContainer.appendChild(placeCardNumberLikes);
 
     this.card = placeCard;
-    this.setEventListeners(this.card);
+    this.setEventListeners();
+    this.setRemoveButton();
     return this.card;
   }
 
   like = (event) => {
-    event.currentTarget.classList.toggle("place-card__like-icon_liked");
+    console.log(this.isLike());
+    if (!this.isLike()) {
+      this.api.putLike(this);
+      event.currentTarget.classList.add("place-card__like-icon_liked");
+    } else {
+      this.api.removeLike(this);
+      event.currentTarget.classList.remove("place-card__like-icon_liked");
+    }
   };
 
+  changeNumberLikes(cardInfo) {
+    this.cardInfo = cardInfo;
+    this.card.querySelector(
+      ".place-card__number-likes"
+    ).textContent = `${this.cardInfo.likes.length}`;
+  }
+
   remove = () => {
+    this.api.removeCard(this);
     this.card.remove();
     this.removeEventListeners();
     this.card = null;
@@ -73,5 +94,17 @@ class Card {
     this.card
       .querySelector(".place-card__delete-icon")
       .removeEventListener("click", this.remove);
+  }
+
+  setRemoveButton() {
+    if (this.cardInfo.owner._id === this.userID) {
+      this.card
+        .querySelector(".place-card__delete-icon")
+        .classList.add("place-card__delete-icon_enable");
+    }
+  }
+
+  isLike() {
+    return this.cardInfo.likes.some((item) => item._id === this.userID);
   }
 }

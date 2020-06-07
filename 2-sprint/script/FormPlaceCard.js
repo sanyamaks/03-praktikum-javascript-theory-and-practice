@@ -5,6 +5,6 @@ class FormPlaceCard extends Form {
   }
   onSubmit(name, link) {
     super.onSubmit();
-    this.cardList.addCard(name.value, link.value);
+    this.cardList.addCard({ name: name.value, link: link.value, likes: [] });
   }
 }
