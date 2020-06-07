@@ -1,6 +1,8 @@
 class Api {
-  constructor(options) {
+  constructor(options, userInfo, cardList) {
     this.options = options;
+    this.userInfo = userInfo;
+    this.cardList = cardList;
   }
 
   getInitialCards() {
@@ -8,32 +10,31 @@ class Api {
       .then((res) => {
         return this.isResolve(res);
       })
-      .then((res) => console.log(res))
+      .then((cards) => this.cardList.renderCards(cards))
       .catch((err) => console.log(err));
   }
 
-  getInfoUser() {
-    fetch(this.options.baseUrl + "/users/me", { headers: this.options.headers })
-      .then((res) => {
-        return this.isResolve(res);
-      })
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
-  }
-
-  updateUserInfo() {
+  getUserInfo() {
     fetch(this.options.baseUrl + "/users/me", {
-      method: "PATCH",
       headers: this.options.headers,
-      body: JSON.stringify({
-        name: "TestName",
-        about: "Physicist and Chemist",
-      }),
     })
       .then((res) => {
         return this.isResolve(res);
       })
-      .then((res) => console.log(res))
+      .then((userInfo) => this.userInfo.updateUserInfo(userInfo))
+      .catch((err) => console.log(err));
+  }
+
+  updateUserInfo(userInfo) {
+    fetch(this.options.baseUrl + "/users/me", {
+      method: "PATCH",
+      headers: this.options.headers,
+      body: JSON.stringify(userInfo),
+    })
+      .then((res) => {
+        return this.isResolve(res);
+      })
+      .then((userInfo) => this.userInfo.updateUserInfo(userInfo))
       .catch((err) => console.log(err));
   }
 

@@ -1,17 +1,16 @@
 class FormProfile extends Form {
-  constructor(form, formValidator, popup, userInfo) {
+  constructor(form, formValidator, popup, userInfo, api) {
     super(form, formValidator, popup);
     this.userInfo = userInfo;
+    this.api = api;
   }
-  onSubmit(name, description) {
+  onSubmit() {
     super.onSubmit();
-    this.userInfo.updateUserInfo(
+    this.api.updateUserInfo(
       {
         name: name.value,
-        description: description.value
-      },
-      this.userInfo.fullName,
-      this.userInfo.job
+        about: about.value,
+      }
     );
   }
 }

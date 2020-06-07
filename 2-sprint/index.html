@@ -27,15 +27,19 @@
 
     <!-- Пример вёрстки карточки: -->
 
-    <!--<div class="place-card">-->
-    <!--<div class="place-card__image" style="background-image: url(https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg)">-->
-    <!--<button class="place-card__delete-icon"></button>-->
-    <!--</div>-->
-    <!--<div class="place-card__description">-->
-    <!--<h3 class="place-card__name">Камчатка</h3>-->
-    <!--<button class="place-card__like-icon"></button>-->
-    <!--</div>-->
-    <!--</div>-->
+<!--    <div class="place-card">-->
+<!--      <div class="place-card__image"-->
+<!--           style="background-image: url(https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg)">-->
+<!--        <button class="place-card__delete-icon"></button>-->
+<!--      </div>-->
+<!--      <div class="place-card__description">-->
+<!--        <h3 class="place-card__name">Тестовая карточка</h3>-->
+<!--        <div class="place-card__like-container">-->
+<!--        <button class="place-card__like-icon"></button>-->
+<!--          <p class="place-card__number-likes">0</p>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
 
     <!-- конец примера. -->
 
@@ -80,6 +84,21 @@
     </div>
   </div>
 
+  <div class="popup popup_avatar">
+    <div class="popup__content">
+      <img src="images/close.svg" alt="" class="popup__close">
+      <h3 class="popup__title">Обновить аватар</h3>
+      <form class="popup__form" name="profile" novalidate>
+        <div class="popup__container">
+          <input type="url" name="link" class="popup__input popup__input_type_link-url"
+                 placeholder="Ссылка на аватар" pattern="https?://.+.jpg" required>
+          <p class="popup__error-message"></p>
+        </div>
+        <button class="button popup__button">Сохранить</button>
+      </form>
+    </div>
+  </div>
+
   <div class="popup popup_image">
     <div class="popup__content popup__content_image">
       <img src="images/close.svg" alt="" class="popup__close">
@@ -94,6 +113,7 @@
 <script src="script/CardList.js"></script>
 <script src="script/Form.js"></script>
 <script src="script/FormPlaceCard.js"></script>
+<script src="script/FormAvatar.js"></script>
 <script src="script/FormProfile.js"></script>
 <script src="script/Popup.js"></script>
 <script src="script/UserInfo.js"></script>

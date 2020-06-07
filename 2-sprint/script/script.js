@@ -1,35 +1,53 @@
 const openPopupPlaceCardButton = document.querySelector(
   ".button.user-info__button"
 );
-const editProfileButton = document.querySelector(".user-info__edit");
+const openPopupProfileButton = document.querySelector(".user-info__edit");
+const openPopupAvatarButton = document.querySelector(".user-info__photo");
 const placeList = document.querySelector(".places-list");
 const fullName = document.querySelector(".user-info__name");
 const job = document.querySelector(".user-info__job");
 const popupProfile = document.querySelector(".popup_profile");
 const popupPlaceCard = document.querySelector(".popup_place-card");
 const popupImage = document.querySelector(".popup_image");
+const popupAvatar = document.querySelector(".popup_avatar");
 const formProfile = popupProfile.querySelector(".popup__form");
 const formPlaceCard = popupPlaceCard.querySelector(".popup__form");
+const formAvatar = popupAvatar.querySelector(".popup__form");
 const popupProfileObj = new Popup(popupProfile);
 popupProfileObj.setCloseButtonListeners();
 const popupPlaceCardObj = new Popup(popupPlaceCard);
 popupPlaceCardObj.setCloseButtonListeners();
 const popupImageObj = new Popup(popupImage);
 popupImageObj.setCloseButtonListeners();
+const popupAvatarObj = new Popup(popupAvatar);
+popupAvatarObj.setCloseButtonListeners();
 const formValidatorProfile = new FormValidator(formProfile);
 const formValidatorPlaceCard = new FormValidator(formPlaceCard);
+const formValidatorAvatar = new FormValidator(formAvatar);
 const userInfo = new UserInfo(fullName, job);
 
-const createCard = (name, link) => {
-  return new Card(name, link, handleOpenPopupImage);
+const createCard = (card) => {
+  return new Card(card, handleOpenPopupImage);
 };
 
-const cardList = new CardList(placeList, initialCards, createCard);
+const cardList = new CardList(placeList, createCard);
+const api = new Api(
+  {
+    baseUrl: "https://praktikum.tk/cohort11",
+    headers: {
+      authorization: "4f5e3621-964f-4d58-88fd-12f1d002534a",
+      "Content-Type": "application/json",
+    },
+  },
+  userInfo,
+  cardList
+);
 const formProfileObj = new FormProfile(
   formProfile,
   formValidatorProfile,
   popupProfileObj,
-  userInfo
+  userInfo,
+  api
 );
 formProfileObj.setEventListeners();
 const formPlaceCardObj = new FormPlaceCard(
@@ -39,16 +57,13 @@ const formPlaceCardObj = new FormPlaceCard(
   cardList
 );
 formPlaceCardObj.setEventListeners();
+const formAvatarObj = new FormAvatar(
+  formAvatar,
+  formValidatorAvatar,
+  popupAvatarObj
+);
+formAvatarObj.setEventListeners();
 
-const api = new Api({
-  baseUrl: 'https://praktikum.tk/cohort11',
-  headers: {
-    authorization: "4f5e3621-964f-4d58-88fd-12f1d002534a",
-    'Content-Type': 'application/json'
-  }
-});
-// api.getInfoUser();
-api.getInitialCards();
 // api.updateUserInfo();
 // api.addCard();
 // api.removeCard("5edbe03c8b302e001f0be86c");
@@ -84,7 +99,7 @@ const handleOpenPopupProfile = () => {
    * defaultValue нужно изменять только при сохранении формы
    * (в handleSubmitForm класса FormProfile перед обновлением userInfo)
    */
-  const {name, description} = {...userInfo};
+  const { name, description } = { ...userInfo };
   formProfile.name.defaultValue = name;
   formProfile.description.defaultValue = description;
   formValidatorProfile.resetErrorMessage();
@@ -92,7 +107,15 @@ const handleOpenPopupProfile = () => {
   formProfileObj.setFocusOnFirstInput();
 };
 
-openPopupPlaceCardButton.addEventListener("click", handleOpenPopupPlaceCard);
-editProfileButton.addEventListener("click", handleOpenPopupProfile);
+const handleOpenPopupAvatar = () => {
+  formValidatorAvatar.resetErrorMessage();
+  popupAvatarObj.open();
+  formAvatarObj.setFocusOnFirstInput();
+};
 
-cardList.renderCards();
+openPopupPlaceCardButton.addEventListener("click", handleOpenPopupPlaceCard);
+openPopupProfileButton.addEventListener("click", handleOpenPopupProfile);
+openPopupAvatarButton.addEventListener("click", handleOpenPopupAvatar);
+
+api.getUserInfo();
+api.getInitialCards();

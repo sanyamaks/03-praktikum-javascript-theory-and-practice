@@ -1,5 +1,5 @@
 class UserInfo {
-  constructor(fullName, job) {
+  constructor(fullName, job, api) {
     this.fullName = fullName;
     this.job = job;
     this.name = this.fullName.textContent;
@@ -7,9 +7,9 @@ class UserInfo {
   }
 
   updateUserInfo(userInfo) {
-    const { name, description } = userInfo;
+    const { name, about } = userInfo;
     this.name = name;
-    this.description = description;
+    this.description = about;
     this.fullName.textContent = this.name;
     this.job.textContent = this.description;
   }

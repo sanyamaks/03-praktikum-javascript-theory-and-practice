@@ -1,8 +1,7 @@
 class Card {
-  constructor(name, link, handleOpenPopupImage) {
+  constructor(cardInfo, handleOpenPopupImage) {
     this.card = null;
-    this.name = name;
-    this.link = link;
+    this.cardInfo = cardInfo;
     this.handleOpenPopupImage = handleOpenPopupImage;
   }
   create() {
@@ -11,7 +10,9 @@ class Card {
     const placeCardDeleteIcon = document.createElement("button");
     const placeCardDescription = document.createElement("div");
     const placeCardName = document.createElement("h3");
+    const placeCardLikeContainer = document.createElement("div");
     const placeCardLikeIcon = document.createElement("button");
+    const placeCardNumberLikes = document.createElement("p");
 
     placeCard.classList.add("place-card");
     placeCard.classList.add("places-list__place-card");
@@ -19,23 +20,28 @@ class Card {
     placeCardDeleteIcon.classList.add("place-card__delete-icon");
     placeCardDescription.classList.add("place-card__description");
     placeCardName.classList.add("place-card__name");
+    placeCardLikeContainer.classList.add("place-card__like-container");
     placeCardLikeIcon.classList.add("place-card__like-icon");
+    placeCardNumberLikes.classList.add("place-card__number-likes");
 
-    placeCardImage.style.backgroundImage = `url(${this.link})`;
-    placeCardName.textContent = `${this.name}`;
+    placeCardImage.style.backgroundImage = `url(${this.cardInfo.link})`;
+    placeCardName.textContent = `${this.cardInfo.name}`;
+    placeCardNumberLikes.textContent = `${this.cardInfo.likes.length}`;
 
     placeCard.appendChild(placeCardImage);
     placeCard.appendChild(placeCardDescription);
     placeCardImage.appendChild(placeCardDeleteIcon);
     placeCardDescription.appendChild(placeCardName);
-    placeCardDescription.appendChild(placeCardLikeIcon);
+    placeCardDescription.appendChild(placeCardLikeContainer);
+    placeCardLikeContainer.appendChild(placeCardLikeIcon);
+    placeCardLikeContainer.appendChild(placeCardNumberLikes);
 
     this.card = placeCard;
     this.setEventListeners(this.card);
     return this.card;
   }
 
-  like = event => {
+  like = (event) => {
     event.currentTarget.classList.toggle("place-card__like-icon_liked");
   };
 

@@ -1,17 +1,16 @@
 class CardList {
-  constructor(placeList, initialCards, createCard) {
+  constructor(placeList, createCard) {
     this.placesList = placeList;
-    this.cards = initialCards;
     this.createCard = createCard;
   }
-  renderCards() {
-    this.cards.map(cardsItem => {
-      this.addCard(cardsItem.name, cardsItem.link);
-    });
+  renderCards(cards) {
+    console.log(cards);
+    this.cards = cards;
+    this.cards.map((cardsItem) => this.addCard(cardsItem));
   }
 
-  addCard(name, link) {
-    const card = this.createCard(name, link);
+  addCard(cardsItem) {
+    const card = this.createCard(cardsItem);
     const placeCard = card.create();
     this.placesList.appendChild(placeCard);
   }
