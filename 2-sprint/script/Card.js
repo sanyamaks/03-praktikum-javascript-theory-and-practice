@@ -47,13 +47,18 @@ class Card {
     return this.card;
   }
 
-  like = (event) => {
-    console.log(this.isLike());
+  like = event => {
     if (!this.isLike()) {
-      this.api.putLike(this);
+      this.api
+        .putLike(this.cardInfo._id)
+        .then(card => this.changeNumberLikes(card))
+        .catch(err => console.log(err));
       event.currentTarget.classList.add("place-card__like-icon_liked");
     } else {
-      this.api.removeLike(this);
+      this.api
+        .removeLike(this.cardInfo._id)
+        .then(card => this.changeNumberLikes(card))
+        .catch(err => console.log(err));
       event.currentTarget.classList.remove("place-card__like-icon_liked");
     }
   };
@@ -66,7 +71,10 @@ class Card {
   }
 
   remove = () => {
-    this.api.removeCard(this);
+    this.api
+      .removeCard(this.cardInfo._id)
+      .then(msg => console.log(msg))
+      .catch(err => console.log(err));
     this.card.remove();
     this.removeEventListeners();
     this.card = null;
@@ -105,6 +113,6 @@ class Card {
   }
 
   isLike() {
-    return this.cardInfo.likes.some((item) => item._id === this.userID);
+    return this.cardInfo.likes.some(item => item._id === this.userID);
   }
 }

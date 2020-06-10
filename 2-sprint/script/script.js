@@ -30,39 +30,37 @@ const userInfo = new UserInfo(fullName, job, avatar);
 const createCard = card => {
   return new Card(card, handleOpenPopupImage);
 };
-
-const cardList = new CardList(placeList, createCard);
-const api = new Api(
-  {
-    baseUrl: "https://praktikum.tk/cohort11",
-    headers: {
-      authorization: "4f5e3621-964f-4d58-88fd-12f1d002534a",
-      "Content-Type": "application/json"
-    }
-  },
-  userInfo,
-  cardList
-);
+const api = new Api({
+  baseUrl: "https://praktikum.tk/cohort11",
+  headers: {
+    authorization: "4f5e3621-964f-4d58-88fd-12f1d002534a",
+    "Content-Type": "application/json"
+  }
+});
+const cardList = new CardList(placeList, createCard, api);
 
 const formProfileObj = new FormProfile(
   formProfile,
   formValidatorProfile,
   popupProfileObj,
-  api
+  api,
+  userInfo
 );
 formProfileObj.setEventListeners();
 const formPlaceCardObj = new FormPlaceCard(
   formPlaceCard,
   formValidatorPlaceCard,
   popupPlaceCardObj,
-  api
+  api,
+  cardList
 );
 formPlaceCardObj.setEventListeners();
 const formAvatarObj = new FormAvatar(
   formAvatar,
   formValidatorAvatar,
   popupAvatarObj,
-  api
+  api,
+  userInfo
 );
 formAvatarObj.setEventListeners();
 
@@ -102,9 +100,19 @@ openPopupPlaceCardButton.addEventListener("click", handleOpenPopupPlaceCard);
 openPopupProfileButton.addEventListener("click", handleOpenPopupProfile);
 openPopupAvatarButton.addEventListener("click", handleOpenPopupAvatar);
 
-api.getUserInfo();
-api.getInitialCards();
-
+api
+  .getUserInfo()
+  .then(info => {
+    userInfo.updateUserInfo(info);
+    userInfo.updateUserAvatar(info);
+  })
+  .catch(err => console.log(err));
+api
+  .getInitialCards()
+  .then(cards => {
+    cardList.renderCards(cards, userInfo.userID); //АМ: Можно ли так передавать ID?
+  })
+  .catch(err => console.log(err));
 
 /*REVIEW. Резюме.
 

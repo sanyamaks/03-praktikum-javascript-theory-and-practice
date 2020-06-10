@@ -8,6 +8,7 @@ class UserInfo {
   }
 
   updateUserInfo(userInfo) {
+    this.userID = userInfo._id;
     const { name, about } = userInfo;
     this.name = name;
     this.description = about;
@@ -15,8 +16,8 @@ class UserInfo {
     this.job.textContent = this.description;
   }
 
-  updateUserAvatar(userAvatar){
-    const {avatar} = userAvatar;
-    this.avatar.style.backgroundImage = `url(${avatar})`
+  updateUserAvatar(userAvatar) {
+    const { avatar } = userAvatar;
+    this.avatar.style.backgroundImage = `url(${avatar})`;
   }
 }

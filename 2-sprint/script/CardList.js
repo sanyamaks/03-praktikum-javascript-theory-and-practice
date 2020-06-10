@@ -1,13 +1,13 @@
 class CardList {
-  constructor(placeList, createCard) {
+  constructor(placeList, createCard, api) {
     this.placesList = placeList;
     this.createCard = createCard;
-  }
-  renderCards(cards, userID, api) {
-    this.userID = userID;
     this.api = api;
+  }
+  renderCards(cards, userID) {
+    this.userID = userID;
     this.cards = cards;
-    this.cards.map((cardsItem) => this.addCard(cardsItem));
+    this.cards.map(cardsItem => this.addCard(cardsItem));
   }
 
   addCard(cardsItem) {
