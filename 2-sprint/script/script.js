@@ -66,13 +66,6 @@ const formAvatarObj = new FormAvatar(
 );
 formAvatarObj.setEventListeners();
 
-// api.updateUserInfo();
-// api.addCard();
-// api.removeCard("5edbe03c8b302e001f0be86c");
-// api.putLike("5ed4c882a5831b001f2e976b");
-// api.removeLike("5ed4c882a5831b001f2e976b");
-// api.updateUserAvatar("https://twizz.ru/wp-content/uploads/2019/09/1569240341_18bdcbc66f6127d9909b58b7b0dbd14e.jpg");
-
 function handleOpenPopupImage(event) {
   if (event.target.classList.contains("place-card__image")) {
     const link = event.target.style.backgroundImage.slice(5, -2);
@@ -111,3 +104,21 @@ openPopupAvatarButton.addEventListener("click", handleOpenPopupAvatar);
 
 api.getUserInfo();
 api.getInitialCards();
+
+
+/*REVIEW. Резюме.
+
+Хорошая работа. Выполнены все дополнительные задания.
+Учитывается асинхронность работы с сервером.
+
+Но, необходимо преобразование структуры методов  класса Api.
+
+Что нужно исправить.
+
+1. Методы класса Api должны только возвращать ответ от сервера, обработку этого ответа они содержать не должны (так как это нарушает принцип ООП единственной
+  ответственности метода и класса) (смотрите подробный комментарий в файле класса Api).
+
+
+
+
+*/
