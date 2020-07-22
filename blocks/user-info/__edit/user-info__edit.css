@@ -1,0 +1,12 @@
+.user-info__edit {
+  width: 38px;
+  height: 18px;
+  margin: 24px 0 0 0;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 15px;
+  color: #ffffff;
+  background-color: rgba(0, 0, 0, 0);
+  outline: none;
+  border: 1px solid white;
+}
