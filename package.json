@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "start": "live-server 2-sprint",
-    "deploy": "gh-pages -d 2-sprint"
+    "deploy": "gh-pages -t -d 2-sprint"
   },
   "repository": {
     "type": "git",
